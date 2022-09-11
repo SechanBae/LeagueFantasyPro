@@ -1,0 +1,22 @@
+{
+  "name": "leaguefantasypro",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SechanBae/LeagueFantasyPro.git"
+  },
+  "author": "Sechan Bae",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SechanBae/LeagueFantasyPro/issues"
+  },
+  "homepage": "https://github.com/SechanBae/LeagueFantasyPro#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
