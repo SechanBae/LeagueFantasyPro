@@ -1,0 +1,63 @@
+const db = require("../models");
+const User = db.users;
+const Op = db.Sequelize.Op;
+const bcrypt=require("bcrypt");
+const generateToken = require("../util/generateToken");
+
+exports.create = async (req, res) => { 
+    const isAvailable=await User.count({
+        where:{
+            [Op.or]:[
+                {username:req.body.username},
+                {email:req.body.email}
+            ]
+        }
+    });
+    if(!isAvailable){
+        const salt=await bcrypt.genSalt(10);
+        const user={
+            username:req.body.username,
+            password:await bcrypt.hash(req.body.password,salt),
+            email:req.body.email
+        };
+        User.create(user)
+        .then(data=>{
+            res.send(data)
+        })
+        .catch(err=>{
+            res.status(500).send({
+                message:err.message
+            });
+        });
+    }
+    else{
+        res.status(403).send({
+            message:"Account already exists"
+        })
+    }
+    
+  
+};
+
+exports.findOneLogin = async (req, res) => {
+  const salt=await bcrypt.genSalt(10);
+  const username=req.body.username;
+  const password=req.body.password;
+  const user=await User.findOne({
+    where:{username:username}
+  });
+  if(user){
+    const validPassword=await bcrypt.compare(password,user.password);
+    if(validPassword){
+        //token
+        res.status(200).json({user,token:generateToken(user.userId)});
+    }
+    else{
+        res.status(404).send("Incorrect Credentials");
+    }
+
+  }
+  else{
+    res.status(404).send("Incorrect Credentials");
+  }
+};
