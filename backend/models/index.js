@@ -20,5 +20,16 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.users = require("./user.js")(sequelize, Sequelize);
+db.leagues=require("./league.js")(sequelize,Sequelize);
 
+db.users.belongsToMany(db.leagues,{
+  through:"user_league",
+  as:"leagues",
+  foreignKey:"user_Id"
+});
+db.leagues.belongsToMany(db.users,{
+  through:"user_league",
+  as:"users",
+  foreignKey:"league_Id"
+});
 module.exports = db;

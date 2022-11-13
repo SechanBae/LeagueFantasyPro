@@ -32,7 +32,7 @@ exports.create = async (req, res) => {
     }
     else{
         res.status(403).send({
-            message:"Account already exists"
+            message:"Account with username/email already exists"
         })
     }
     
@@ -49,15 +49,14 @@ exports.findOneLogin = async (req, res) => {
   if(user){
     const validPassword=await bcrypt.compare(password,user.password);
     if(validPassword){
-        //token
         res.status(200).json({user,token:generateToken(user.userId)});
     }
     else{
-        res.status(404).send("Incorrect Credentials");
+        res.status(401).json({message:"Incorrect Credentials"});
     }
 
   }
   else{
-    res.status(404).send("Incorrect Credentials");
+    res.status(401).json({message:"Incorrect Credentials"});
   }
 };
