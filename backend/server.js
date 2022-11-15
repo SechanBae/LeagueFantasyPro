@@ -12,7 +12,8 @@ var corsOptions={
 app.use(cors(corsOptions));
 app.use(express.json());
 require("./routes/userRoutes")(app);
-db.sequelize.sync({force:true})
+require("./routes/leaguesRoutes")(app);
+db.sequelize.sync()
     .then(()=>{
         console.log("Synced db.");
     })

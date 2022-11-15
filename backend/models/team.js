@@ -11,6 +11,24 @@ module.exports = (sequelize, Sequelize) => {
       points: {
           type: Sequelize.INTEGER,
           defaultValue:0
+      },
+      top:{
+        type: Sequelize.INTEGER
+      },
+      jg:{
+        type: Sequelize.INTEGER
+      },
+      mid:{
+        type: Sequelize.INTEGER
+      },
+      bot:{
+        type: Sequelize.INTEGER
+      },
+      sup:{
+        type: Sequelize.INTEGER
+      },
+      sub:{
+        type: Sequelize.INTEGER
       }
     });
   

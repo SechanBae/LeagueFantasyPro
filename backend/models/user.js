@@ -14,6 +14,11 @@ module.exports = (sequelize, Sequelize) => {
     email:{
         type:Sequelize.STRING
     },
+    isMuted:{
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
+
+    },
     isAdmin:{
         type:Sequelize.BOOLEAN,
         defaultValue:false

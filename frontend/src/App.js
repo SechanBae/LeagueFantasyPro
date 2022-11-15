@@ -5,6 +5,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from './screens/LoginPage/LoginPage';
 import RegisterPage from './screens/RegisterPage/RegisterPage';
+import HomePage from './screens/HomePage/HomePage';
 const App=()=> (
   <BrowserRouter>
     <Header/>
@@ -13,6 +14,7 @@ const App=()=> (
         <Route path="/" element={<LandingPage/>} exact/>
         <Route path="/login" element={<LoginPage/>} exact/>
         <Route path="/register" element={<RegisterPage/>} exact/>
+        <Route path="/home" element={<HomePage/>} exact/>
       </Routes>
     </main>
      <Footer/>

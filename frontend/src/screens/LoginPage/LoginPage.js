@@ -1,9 +1,10 @@
 import e from 'cors';
 import React, { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
+import { Button, Col, Form, Row } from 'react-bootstrap'
 import axios from "axios";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import Message from '../../components/Message';
+import Spinner from '../../components/Spinner';
 const LoginPage = () => {
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
@@ -38,9 +39,10 @@ const LoginPage = () => {
         }
     };
     return (
-        <div>
+        <div className="container">
             <h1>Login</h1>
             {error && <Message variant='danger'>{error}</Message>}
+            {loading&&<Spinner></Spinner>}
             <Form onSubmit={submitHandler}>
                 <Form.Group className="mb-3" controlId="username">
                     <Form.Label>Username</Form.Label>
@@ -66,6 +68,11 @@ const LoginPage = () => {
                     Submit
                 </Button>
             </Form>
+            <Row className="py-2">
+                <Col>
+                    <p>Not a user? <Link to="/register">Register Here</Link></p>
+                </Col>
+            </Row>
         </div>
     )
 }

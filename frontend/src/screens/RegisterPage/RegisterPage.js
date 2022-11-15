@@ -1,8 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Button, Form } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
+import { Button, Col, Form, Row } from 'react-bootstrap'
+import { Link, useNavigate } from 'react-router-dom';
 import Message from '../../components/Message';
+import Spinner from '../../components/Spinner';
 
 const RegisterPage = () => {
     const [error,setError]=useState(false);
@@ -11,6 +12,7 @@ const RegisterPage = () => {
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("");
     const [passwordConfirm,setPasswordConfirm]=useState("");
+    const [loading,setLoading]=useState(false);
     const navigate=useNavigate();
     useEffect(()=>{
         const userInfo=localStorage.getItem("userInfo");
@@ -21,6 +23,8 @@ const RegisterPage = () => {
     const submitHandler=async (e)=>{
         e.preventDefault();
         var passwordFormat=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+        
+        setLoading(true);
         if(password!=passwordConfirm){
             setError("Passwords must match");
         }
@@ -44,12 +48,15 @@ const RegisterPage = () => {
             }
             console.log("pass");
         }
+        
+        setLoading(false)
     };
     return (
-        <div>
+        <div className="container">
             <h1>Register</h1>
             {error && <Message variant='danger'>{error}</Message>}
             {confirm &&<Message variant="info">{confirm}</Message>}
+            {loading&&<Spinner></Spinner>}
             <Form onSubmit={submitHandler}>
                 <Form.Group className="mb-3" controlId="username">
                     <Form.Label>Username</Form.Label>
@@ -96,6 +103,11 @@ const RegisterPage = () => {
                     Submit
                 </Button>
             </Form>
+            <Row className="py-2">
+                <Col>
+                    <p>Already a user? <Link to="/login">Login Here</Link></p>
+                </Col>
+            </Row>
         </div>
     )
 }

@@ -11,15 +11,16 @@ module.exports = (sequelize, Sequelize) => {
       region: {
           type: Sequelize.STRING
       },
-      email:{
-          type:Sequelize.STRING
-      },
       isStarted:{
         type:Sequelize.BOOLEAN,
         defaultValue:false
       },
       isPublic:{
-          type:Sequelize.BOOLEAN
+        type:Sequelize.BOOLEAN
+      },
+      isDone:{
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
       },
       draftDateTime:{
         type:Sequelize.DATE

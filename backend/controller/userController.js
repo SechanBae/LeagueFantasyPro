@@ -3,7 +3,6 @@ const User = db.users;
 const Op = db.Sequelize.Op;
 const bcrypt=require("bcrypt");
 const generateToken = require("../util/generateToken");
-
 exports.create = async (req, res) => { 
     const isAvailable=await User.count({
         where:{
@@ -40,7 +39,6 @@ exports.create = async (req, res) => {
 };
 
 exports.findOneLogin = async (req, res) => {
-  const salt=await bcrypt.genSalt(10);
   const username=req.body.username;
   const password=req.body.password;
   const user=await User.findOne({
@@ -49,7 +47,8 @@ exports.findOneLogin = async (req, res) => {
   if(user){
     const validPassword=await bcrypt.compare(password,user.password);
     if(validPassword){
-        res.status(200).json({user,token:generateToken(user.userId)});
+        
+        res.status(200).json({"username":username,token:generateToken(user)});
     }
     else{
         res.status(401).json({message:"Incorrect Credentials"});

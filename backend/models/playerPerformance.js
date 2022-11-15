@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-    const playerPerformance = sequelize.define("playerPerformance", {
+    const PlayerPerformance = sequelize.define("playerPerformance", {
       performanceId: {
           type: Sequelize.INTEGER,
           autoIncrement:true,
@@ -7,6 +7,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       week: {
           type: Sequelize.INTEGER
+      },
+      season: {
+        type: Sequelize.INTEGER
       },
       totalKills:{
         type: Sequelize.DECIMAL(3,2)

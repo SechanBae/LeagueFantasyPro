@@ -17,6 +17,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       offerTeam:{
         type:Sequelize.INTEGER
+      },
+      receiveTeam:{
+        type:Sequelize.INTEGER
       }
     });
   
