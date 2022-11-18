@@ -35,12 +35,14 @@ db.leagues.belongsToMany(db.users,{
   as:"users",
   foreignKey:"league_Id"
 });
-db.leagues.hasMany(db.teams,{as:"teams"});
 db.teams.belongsTo(db.leagues,{
   foreignKey:"leagueId",
   as:"leagues"
 });
-db.players.hasMany(db.playerPerformances,{as:"playerPerformances"});
+db.teams.belongsTo(db.users,{
+  foreignKey:"userId",
+  as:"users"
+});
 db.playerPerformances.belongsTo(db.players,{
   foreignKey:"playerId",
   as:"playerPerformances"

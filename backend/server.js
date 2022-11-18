@@ -13,7 +13,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 require("./routes/userRoutes")(app);
 require("./routes/leaguesRoutes")(app);
-db.sequelize.sync()
+db.sequelize.sync({force:true})
     .then(()=>{
         console.log("Synced db.");
     })
