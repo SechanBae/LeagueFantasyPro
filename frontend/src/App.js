@@ -6,15 +6,24 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from './screens/LoginPage/LoginPage';
 import RegisterPage from './screens/RegisterPage/RegisterPage';
 import HomePage from './screens/HomePage/HomePage';
+import AddPlayers from './screens/AdminPages/AddPlayers';
+import ChatPage from './screens/ChatPage/ChatPage';
+import CreateLeaguePage from './screens/CreateLeaguePage/CreateLeaguePage';
+import JoinLeaguePage from './screens/JoinLeaguePage.js/JoinLeaguePage';
 const App=()=> (
   <BrowserRouter>
     <Header/>
-    <main>
+    <main className='mt-5'>
       <Routes>
         <Route path="/" element={<LandingPage/>} exact/>
         <Route path="/login" element={<LoginPage/>} exact/>
         <Route path="/register" element={<RegisterPage/>} exact/>
         <Route path="/home" element={<HomePage/>} exact/>
+        <Route path="/admin/addPlayers" element={<AddPlayers/>} exact/>
+        <Route path="/createLeague" element={<CreateLeaguePage/>} exact/>
+        <Route path="/joinLeague" element={<JoinLeaguePage/>} exact/>
+        <Route path="/chats" element={<ChatPage/>}/>
+        <Route path="*" element={<HomePage/>}/>
       </Routes>
     </main>
      <Footer/>

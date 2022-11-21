@@ -79,7 +79,7 @@ const RegisterPage = () => {
                      />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="password">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Password (length must be between 8-20,must contain at least 1 number,1 uppercase, and 1 lowercase)</Form.Label>
                     <Form.Control
                         required
                         type="password"

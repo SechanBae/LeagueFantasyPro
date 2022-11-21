@@ -15,16 +15,16 @@ module.exports = (sequelize, Sequelize) => {
       top:{
         type: Sequelize.INTEGER
       },
-      jg:{
+      jungle:{
         type: Sequelize.INTEGER
       },
-      mid:{
+      middle:{
         type: Sequelize.INTEGER
       },
-      bot:{
+      adc:{
         type: Sequelize.INTEGER
       },
-      sup:{
+      support:{
         type: Sequelize.INTEGER
       },
       sub:{

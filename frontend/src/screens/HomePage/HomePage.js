@@ -1,35 +1,64 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Button, Card } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import Message from '../../components/Message';
 
 const HomePage = () => {
-    const [leagues,setLeagues]=useState([]);
+    const [leagues,setLeagues]=useState(false);
+    const [error,setError]=useState(false);
+    const navigate=useNavigate(); 
     useEffect(()=>{
         async function getNotes(){
             try{
                 const userInfo=localStorage.getItem("userInfo");
-                const config={
-                    headers:{
-                        Authorization:'Bearer '+JSON.parse(userInfo).token,
-                    },
+                if(!userInfo){
+                    navigate("/");
                 }
-                const response=await axios.get('/api/leagues/',config);
-                console.log(response);
-                setLeagues(response.data.leagues);
+                else{
+                    const config={
+                        headers:{
+                            Authorization:'Bearer '+JSON.parse(userInfo).token,
+                        },
+                    }
+                    const response=await axios.get('/api/leagues/',config);
+                    setLeagues(response.data.leagues);
+                }
             }
             catch(error){
-                console.log(error);
+                setError(error.response.data.message+". Please logout and login again");
             }
         }
         getNotes();
     },[])
     return (
         <div className='container'>
-            <h1>Home</h1>
-            {leagues&&
+        {error && <Message variant='danger'>{error}</Message>}
+            <h2>Your Leagues</h2>
+            {leagues?
+            
             leagues.map((league)=>(
-                <p>{league.name}</p>
+                <Card key={league.leagueId}>
+                    <Card.Header as="h5">League: {league.name}</Card.Header>
+                    <Card.Body>
+                        <Card.Title>Team Name: {league.teamName}</Card.Title>
+                        <Card.Text>
+                        Your team currently has {league.points} points.
+                        </Card.Text>
+                        <Button variant="primary" href={"/league/"+league.leagueId}>Go to League Page</Button>
+                    </Card.Body>
+                </Card>
             ))
+            :<h5>You are currently not in any leagues</h5>
             }
+            <div className='row mt-5 '>
+                <div className='col d-flex justify-content-center'>
+                    <Button href="/createLeague">Create Your Own League</Button>
+                </div>
+                <div className='col d-flex justify-content-center'> 
+                    <Button href="/joinLeague">Join Other Leagues</Button>
+                </div>
+            </div>
         </div>
     )
 }

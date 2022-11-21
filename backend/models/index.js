@@ -25,20 +25,11 @@ db.teams=require("./team.js")(sequelize,Sequelize);
 db.players=require("./player.js")(sequelize,Sequelize);
 db.playerPerformances=require("./playerPerformance.js")(sequelize,Sequelize);
 db.trades=require("./trade")(sequelize,Sequelize);
-db.users.belongsToMany(db.leagues,{
-  through:"user_league",
-  as:"leagues",
-  foreignKey:"user_Id"
-});
-db.leagues.belongsToMany(db.users,{
-  through:"user_league",
-  as:"users",
-  foreignKey:"league_Id"
-});
+db.messages=require("./message")(sequelize,Sequelize);
 db.teams.belongsTo(db.leagues,{
   foreignKey:"leagueId",
   as:"leagues"
-});
+}); 
 db.teams.belongsTo(db.users,{
   foreignKey:"userId",
   as:"users"
@@ -47,4 +38,16 @@ db.playerPerformances.belongsTo(db.players,{
   foreignKey:"playerId",
   as:"playerPerformances"
 });
+db.trades.belongsTo(db.leagues,{
+  foreignKey:"leagueId",
+  as:"leagues"
+})
+db.messages.belongsTo(db.users,{
+  foreignKey:"userId",
+  as:"users"
+})
+db.messages.belongsTo(db.leagues,{
+  foreignKey:"leagueId",
+  as:"leagues"
+})
 module.exports = db;

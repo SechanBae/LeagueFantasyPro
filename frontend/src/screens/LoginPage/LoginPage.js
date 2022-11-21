@@ -32,10 +32,12 @@ const LoginPage = () => {
             },
             );
             localStorage.setItem("userInfo",JSON.stringify(data));
-            setLoading(false)
+            setLoading(false);
+            window.location.reload();
         } catch (error) {
             console.log(error);
             setError(error.response.data.message);
+            setLoading(false);
         }
     };
     return (
@@ -55,7 +57,7 @@ const LoginPage = () => {
                      />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="password">
-                    <Form.Label>Password</Form.Label>
+                    <Form.Label>Password </Form.Label>
                     <Form.Control 
                         required
                         type="password" 

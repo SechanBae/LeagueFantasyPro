@@ -8,8 +8,8 @@ module.exports = (sequelize, Sequelize) => {
       gameName: {
           type: Sequelize.STRING
       },
-      realName: {
-        type: Sequelize.STRING
+      position:{
+          type: Sequelize.STRING
       },
       region: {
         type: Sequelize.STRING
@@ -18,16 +18,23 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING
       },
       avgKPG:{
-        type: Sequelize.DECIMAL(3,2)
+        type: Sequelize.DECIMAL(6,2)
       },
       avgDPG:{
-        type: Sequelize.DECIMAL(3,2)
+        type: Sequelize.DECIMAL(6,2)
       },
       avgAPG:{
-        type: Sequelize.DECIMAL(3,2)
+        type: Sequelize.DECIMAL(6,2)
       },
       avgCSPG:{
-        type: Sequelize.DECIMAL(3,2)
+        type: Sequelize.DECIMAL(6,2)
+      },
+      scoreRating:{
+        type: Sequelize.DECIMAL(10,2)
+      },
+      pastPlayer:{
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
       }
     });
   

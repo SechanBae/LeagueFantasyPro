@@ -11,6 +11,7 @@ const checkLogin=async function(req,res,next){
 
             const decoded=jwt.verify(token,process.env.JWT_SECRET);
             const user=await User.findByPk(decoded.id.userId,{attributes:['userId','username','email','isMuted','isAdmin']});
+            console.log(user);
             req.user=user.dataValues;
             next();
         }
