@@ -7,7 +7,7 @@ const Header = () => {
   const [isAdmin,setIsAdmin]=useState(false);
   const navigate=useNavigate(); 
   useEffect(()=>{
-    const userInfo=localStorage.getItem("userInfo");
+    const userInfo=sessionStorage.getItem("userInfo");
     if(userInfo){
       setLoggedIn(true);
       setUsername(JSON.parse(userInfo).username);
@@ -15,7 +15,7 @@ const Header = () => {
     }
   },[]);
   const logout=()=>{
-    localStorage.removeItem("userInfo");
+    sessionStorage.removeItem("userInfo");
     navigate("/");
     window.location.reload();
   }

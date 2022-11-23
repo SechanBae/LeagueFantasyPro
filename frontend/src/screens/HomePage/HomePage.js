@@ -11,7 +11,7 @@ const HomePage = () => {
     useEffect(()=>{
         async function getNotes(){
             try{
-                const userInfo=localStorage.getItem("userInfo");
+                const userInfo=sessionStorage.getItem("userInfo");
                 if(!userInfo){
                     navigate("/");
                 }
@@ -26,7 +26,8 @@ const HomePage = () => {
                 }
             }
             catch(error){
-                setError(error.response.data.message+". Please logout and login again");
+                console.log(error);
+                setError(error.response.data.message);
             }
         }
         getNotes();
@@ -45,7 +46,7 @@ const HomePage = () => {
                         <Card.Text>
                         Your team currently has {league.points} points.
                         </Card.Text>
-                        <Button variant="primary" href={"/league/"+league.leagueId}>Go to League Page</Button>
+                        <Button variant="info" href={"/league/"+league.leagueId}>Go to League Page</Button>
                     </Card.Body>
                 </Card>
             ))
@@ -53,10 +54,10 @@ const HomePage = () => {
             }
             <div className='row mt-5 '>
                 <div className='col d-flex justify-content-center'>
-                    <Button href="/createLeague">Create Your Own League</Button>
+                    <Button variant="success"  href="/createLeague">Create Your Own League</Button>
                 </div>
                 <div className='col d-flex justify-content-center'> 
-                    <Button href="/joinLeague">Join Other Leagues</Button>
+                    <Button variant='light' href="/joinLeague">Join Other Leagues</Button>
                 </div>
             </div>
         </div>

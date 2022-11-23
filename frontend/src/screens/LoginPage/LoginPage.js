@@ -12,7 +12,7 @@ const LoginPage = () => {
     const [loading,setLoading]=useState(false);
     const navigate=useNavigate(); 
     useEffect(()=>{
-        const userInfo=localStorage.getItem("userInfo");
+        const userInfo=sessionStorage.getItem("userInfo");
         if(userInfo){
             navigate("/");
         }
@@ -31,7 +31,7 @@ const LoginPage = () => {
                 password
             },
             );
-            localStorage.setItem("userInfo",JSON.stringify(data));
+            sessionStorage.setItem("userInfo",JSON.stringify(data));
             setLoading(false);
             window.location.reload();
         } catch (error) {
@@ -62,7 +62,7 @@ const LoginPage = () => {
                         required
                         type="password" 
                         value={password}
-                        placeholder="Password"
+                        placeholder="Enter Password"
                         onChange={(e)=>setPassword(e.target.value)}
                     />
                 </Form.Group>

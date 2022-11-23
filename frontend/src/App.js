@@ -10,6 +10,7 @@ import AddPlayers from './screens/AdminPages/AddPlayers';
 import ChatPage from './screens/ChatPage/ChatPage';
 import CreateLeaguePage from './screens/CreateLeaguePage/CreateLeaguePage';
 import JoinLeaguePage from './screens/JoinLeaguePage.js/JoinLeaguePage';
+import NotFoundPage from './screens/NotFoundPage/NotFoundPage';
 const App=()=> (
   <BrowserRouter>
     <Header/>
@@ -23,7 +24,7 @@ const App=()=> (
         <Route path="/createLeague" element={<CreateLeaguePage/>} exact/>
         <Route path="/joinLeague" element={<JoinLeaguePage/>} exact/>
         <Route path="/chats" element={<ChatPage/>}/>
-        <Route path="*" element={<HomePage/>}/>
+        <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </main>
      <Footer/>

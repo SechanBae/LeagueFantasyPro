@@ -15,7 +15,7 @@ require("./routes/userRoutes")(app);
 require("./routes/leaguesRoutes")(app);
 require("./routes/teamRoutes")(app);
 require("./routes/playerRoutes")(app);
-db.sequelize.sync({force:true})
+db.sequelize.sync()
     .then(()=>{
         console.log("Synced db.");
     })

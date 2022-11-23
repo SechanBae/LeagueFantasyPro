@@ -5,7 +5,7 @@ const LandingPage = () => {
     
     const navigate=useNavigate(); 
     useEffect(()=>{
-        const userInfo=localStorage.getItem("userInfo");
+        const userInfo=sessionStorage.getItem("userInfo");
         if(userInfo){
             navigate("/home");
         }

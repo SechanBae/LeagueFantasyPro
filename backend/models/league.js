@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
           primaryKey:true
       },
       host:{
-          type:Sequelize.INTEGER
+          type:Sequelize.STRING
       },
       name: {
           type: Sequelize.STRING
@@ -20,6 +20,9 @@ module.exports = (sequelize, Sequelize) => {
       },
       isPublic:{
         type:Sequelize.BOOLEAN
+      },
+      password:{
+        type:Sequelize.STRING
       },
       isDone:{
         type:Sequelize.BOOLEAN,

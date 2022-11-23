@@ -15,7 +15,7 @@ const RegisterPage = () => {
     const [loading,setLoading]=useState(false);
     const navigate=useNavigate();
     useEffect(()=>{
-        const userInfo=localStorage.getItem("userInfo");
+        const userInfo=sessionStorage.getItem("userInfo");
         if(userInfo){
             navigate("/");
         }
@@ -26,9 +26,11 @@ const RegisterPage = () => {
         
         setLoading(true);
         if(password!=passwordConfirm){
+            setConfirm(false);
             setError("Passwords must match");
         }
         else if(!password.match(passwordFormat)){
+            setConfirm(false);
             setError("Password must be between 8 to 20 characters, 1 number, 1 uppercase, and 1 lowercase");
         }
         else{
@@ -46,9 +48,7 @@ const RegisterPage = () => {
                 setConfirm(false);
                 setError(error.response.data.message);
             }
-            console.log("pass");
         }
-        
         setLoading(false)
     };
     return (
