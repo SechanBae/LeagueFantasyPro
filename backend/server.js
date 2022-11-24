@@ -1,7 +1,5 @@
 const express = require("express");
-const mysql=require("mysql2");
 const cors=require("cors");
-const userRoutes=require("./routes/userRoutes");
 const db=require("./models");
 
 const app=express();
@@ -22,8 +20,9 @@ db.sequelize.sync()
     .catch((err)=>{
         console.log("Failed to sync db: "+err.message);
     });
-const server=app.listen(5000, console.log("Server started on port 5000"));
+app.set('port',process.env.PORT || 5000);
 
+const server=app.listen(5000, console.log("Server started on port 5000"));
 const io =require("socket.io")(server,{
     pingTimeout: 60000,
     cors: {
