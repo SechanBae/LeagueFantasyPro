@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'LeagueFantasyEsports'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_40179C2BA7994442BFA675BFDEB6A100 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_6F8256AAA9524BE1810D53E11B7FACB4 }}
           package: .
