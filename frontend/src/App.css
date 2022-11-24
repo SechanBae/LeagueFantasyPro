@@ -2,12 +2,12 @@
   min-height: 100vh;
 }
 main{
-  min-height: 90vh;
+  min-height: 85vh;
 }
 .footer{
   background-color: #adb5bd;
   width: 100%;
-  min-height: 2.5rem;
+  min-height: 3vh;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -74,6 +74,9 @@ const LoginPage = () => {
                 <Col>
                     <p>Not a user? <Link to="/register">Register Here</Link></p>
                 </Col>
+                <Col>
+                    <p>Forgot your password? <Link to="/forgotPassword">Click Here</Link></p>
+                </Col>
             </Row>
         </div>
     )

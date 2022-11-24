@@ -133,7 +133,7 @@ exports.joinLeague = async (req, res) => {
 exports.getLeaguesForJoin= async (req,res)=>{
     try{
         const leagues = await sequelize.query(
-            "SELECT * FROM leagues INNER JOIN teams ON leagues.leagueId=teams.leagueId WHERE leagues.leagueID NOT IN (SELECT leagueId FROM teams WHERE userId=?) GROUP BY leagues.leagueId",
+            "SELECT *,COUNT(*) as capacity FROM leagues INNER JOIN teams ON leagues.leagueId=teams.leagueId WHERE leagues.leagueID NOT IN (SELECT leagueId FROM teams WHERE userId=?) AND leagues.isStarted=0 GROUP BY leagues.leagueId",
             {
               replacements: [req.user.userId],
               type: QueryTypes.SELECT,

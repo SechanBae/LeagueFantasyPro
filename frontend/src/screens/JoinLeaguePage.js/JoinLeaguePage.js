@@ -73,6 +73,23 @@ const JoinLeaguePage = () => {
       setOrderDirection("ASC")
     }
   }
+  const sortingCapacity=()=>{
+    if(orderDirection==="ASC"){
+      const sorted=[...leagues].sort((a,b)=>
+        a["capacity"]-b["capacity"]
+      )
+      setLeagues(sorted);
+      setOrderDirection("DSC")
+    }
+    else{
+      
+      const sorted=[...leagues].sort((a,b)=>
+        b["capacity"]-a["capacity"]
+      )
+      setLeagues(sorted);
+      setOrderDirection("ASC")
+    }
+  }
   const cancelJoin=()=>{
     setTeamName("");
     setPassword("");
@@ -148,6 +165,7 @@ const JoinLeaguePage = () => {
             <th onClick={()=>sorting("region")}>Region{'\u2195'}</th>
             <th onClick={()=>sorting("host")}>Hosted By{'\u2195'}</th>
             <th onClick={()=>sortingPublic()}>Public{'\u2195'}</th>
+            <th onClick={()=>sortingCapacity()}>Capacity{'\u2195'}</th>
             <th className='joinCol'></th>
           </tr>
         </thead>
@@ -159,12 +177,13 @@ const JoinLeaguePage = () => {
                 <td>{league.region}</td>
                 <td>{league.host}</td>
                 <td>{league.isPublic?'\u2713':'\u2715'}</td>
+                <td>{league.capacity}/6</td>
                 <td><Button onClick={()=>setJoin(league)}>Join</Button></td>
               </tr>
           ))
           :
           <tr>
-            <td colSpan={5}>There are currently no joinable leagues</td>
+            <td colSpan={6}>There are currently no joinable leagues</td>
           </tr>
           }
         </tbody>

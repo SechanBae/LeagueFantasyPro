@@ -11,6 +11,10 @@ import ChatPage from './screens/ChatPage/ChatPage';
 import CreateLeaguePage from './screens/CreateLeaguePage/CreateLeaguePage';
 import JoinLeaguePage from './screens/JoinLeaguePage.js/JoinLeaguePage';
 import NotFoundPage from './screens/NotFoundPage/NotFoundPage';
+import ProfilePage from './screens/ProfilePage/ProfilePage';
+import LeaguePage from './screens/LeaguePage/LeaguePage';
+import ForgotPasswordPage from './screens/ResetPasswordPages/ForgotPasswordPage';
+import PasswordResetPage from './screens/ResetPasswordPages/PasswordResetPage';
 const App=()=> (
   <BrowserRouter>
     <Header/>
@@ -19,11 +23,20 @@ const App=()=> (
         <Route path="/" element={<LandingPage/>} exact/>
         <Route path="/login" element={<LoginPage/>} exact/>
         <Route path="/register" element={<RegisterPage/>} exact/>
+        <Route path="/forgotPassword" element={<ForgotPasswordPage/>} exact/>
+        <Route path="/passwordReset">
+          <Route path=":token" element={<PasswordResetPage/>} exact/>
+        </Route>
         <Route path="/home" element={<HomePage/>} exact/>
         <Route path="/admin/addPlayers" element={<AddPlayers/>} exact/>
         <Route path="/createLeague" element={<CreateLeaguePage/>} exact/>
         <Route path="/joinLeague" element={<JoinLeaguePage/>} exact/>
-        <Route path="/chats" element={<ChatPage/>}/>
+        <Route path="/profile" element={<ProfilePage/>} exact/>
+        <Route path="/league">
+          <Route path=":leagueId"element={<LeaguePage/>}exact/>
+        </Route>
+        <Route path="/chats" element={<ChatPage/>}>
+        </Route>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </main>
