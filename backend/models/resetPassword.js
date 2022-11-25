@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
     token: {
         type: Sequelize.STRING
     }
-  });
+  },{timestamps:false});
 
   return ResetPassword;
 };

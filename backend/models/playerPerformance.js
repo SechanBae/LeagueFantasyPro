@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
       totalCS:{
         type: Sequelize.DECIMAL(3,2)
       }
-    });
+    },{timestamps:false});
   
     return PlayerPerformance;
   };

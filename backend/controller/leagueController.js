@@ -84,8 +84,18 @@ exports.joinLeague = async (req, res) => {
         type: QueryTypes.SELECT,
       }
     );
+    const checkCapacity=await sequelize.query(
+      "SELECT COUNT(*) as capacity FROM teams WHERE leagueId=?",
+      {replacements: [req.user.userId, req.body.leagueId],
+      type: QueryTypes.SELECT,
+      } 
+    )
+    
     if (alreadyJoined.length) {
       res.status(400).json({ message: "You are already in this league" });
+    }
+    else if(checkCapacity.capacity==6){  
+      res.status(400).json({ message: "This league has reached max capacity" });
     }
     else {
         const teamData = {
@@ -145,4 +155,29 @@ exports.getLeaguesForJoin= async (req,res)=>{
         
         res.status(400).json({ message: error.message });
     }
+}
+exports.getLeagueInfo=async(req,res)=>{
+  try{
+    const league=await League.findByPk(req.params.leagueId);
+    if(league){
+      const teams=await Team.findAll({
+        where:{
+          leagueId:req.params.leagueId
+        },
+        include:{
+          model:User,
+          as:"users",
+          attributes:["username"]
+        }
+          
+      })
+      res.status(200).json({league,teams});
+    }
+    else{
+      res.status(400).json({ message: "No League Exists" });
+    }
+  }
+  catch(error){
+    res.status(400).json({ message: error.message });
+  }
 }

@@ -31,7 +31,8 @@ module.exports = (sequelize, Sequelize) => {
       draftDateTime:{
         type:Sequelize.DATE
       }
-    });
+    },
+    {timestamps:false});
   
     return League;
   };

@@ -30,7 +30,7 @@ module.exports = (sequelize, Sequelize) => {
       sub:{
         type: Sequelize.INTEGER
       }
-    });
+    },{timestamps:false});
   
     return Team;
   };

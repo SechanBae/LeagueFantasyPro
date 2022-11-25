@@ -24,7 +24,7 @@ module.exports = (sequelize, Sequelize) => {
         defaultValue:false
 
     }
-  });
+  },{timestamps:false});
 
   return User;
 };
