@@ -11,9 +11,12 @@ app.use(cors(corsOptions));
 app.use(express.json());
 require("./routes/userRoutes")(app);
 require("./routes/leaguesRoutes")(app);
-require("./routes/teamRoutes")(app);
+require("./routes/draftRoutes")(app);
 require("./routes/playerRoutes")(app);
-db.sequelize.sync()
+require("./routes/teamRoutes")(app);
+require("./routes/performanceRoutes")(app);
+require("./routes/tradeRoutes")(app);
+db.sequelize.sync({alter:true})
     .then(()=>{
         console.log("Synced db.");
     })
@@ -27,10 +30,12 @@ const io =require("socket.io")(server,{
     pingTimeout: 60000,
     cors: {
     origin: "http://localhost:3000",
-   
   }
 })
 console.log("hello");
 io.on("connection",(socket)=>{
     console.log("Connected to Socket");
+    socket.on("draftPickSubmit",(leagueId)=>{
+        socket.broadcast.emit("draftPickBroadcast",leagueId);
+    })
 })

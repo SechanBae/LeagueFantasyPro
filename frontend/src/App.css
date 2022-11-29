@@ -16,3 +16,22 @@ main{
   text-decoration: none;
   color:#222222;
 }
+table{
+  overflow-x:auto;
+}
+.playerTable{
+  overflow-x:auto;
+}
+.draftTable tr{
+  cursor: pointer;
+}
+.draftTable tbody tr.active{
+  background-color: rgba(2, 53, 1, 0.781);
+}
+ul{
+  overflow-x: auto;
+  list-style-type: none;
+}
+th{
+  cursor: pointer;
+}

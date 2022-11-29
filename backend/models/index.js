@@ -27,6 +27,8 @@ db.playerPerformances=require("./playerPerformance.js")(sequelize,Sequelize);
 db.trades=require("./trade")(sequelize,Sequelize);
 db.messages=require("./message")(sequelize,Sequelize);
 db.resetPasswords=require("./resetPassword")(sequelize,Sequelize);
+db.drafts=require("./draft")(sequelize,Sequelize);
+db.teamPerformances=require('./teamPerformance')(sequelize,Sequelize);
 db.teams.belongsTo(db.leagues,{
   foreignKey:"leagueId",
   as:"leagues"
@@ -54,5 +56,21 @@ db.messages.belongsTo(db.leagues,{
 db.resetPasswords.belongsTo(db.users,{
   foreignKey:"userId",
   as:"users"
+})
+db.drafts.belongsTo(db.leagues,{
+  foreignKey:"leagueId",
+  as:"leagues"
+})
+db.drafts.belongsTo(db.users,{
+  foreignKey:"userId",
+  as:"users"
+})
+db.drafts.belongsTo(db.players,{
+  foreignKey:"playerId",
+  as:"players"
+})
+db.teamPerformances.belongsTo(db.teams,{
+  foreignKey:"teamId",
+  as:"teams"
 })
 module.exports = db;

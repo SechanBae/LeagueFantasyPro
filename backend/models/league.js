@@ -28,8 +28,9 @@ module.exports = (sequelize, Sequelize) => {
         type:Sequelize.BOOLEAN,
         defaultValue:false
       },
-      draftDateTime:{
-        type:Sequelize.DATE
+      draftStatus:{
+        type:Sequelize.STRING,
+        defaultValue:"PENDING"
       }
     },
     {timestamps:false});

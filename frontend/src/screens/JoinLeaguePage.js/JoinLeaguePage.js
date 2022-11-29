@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form, Table } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import Message from '../../components/Message';
-import './JoinLeaguePage.css';
 var config;
 const JoinLeaguePage = () => {
   const [error,setError]=useState(false);
@@ -106,6 +105,7 @@ const JoinLeaguePage = () => {
         leagueId:join.leagueId,
         password:password
       },config);
+      navigate("/league/"+join.leagueId);
     }catch(error){
       setError(error.response.data.message);
     }

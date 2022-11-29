@@ -50,7 +50,7 @@ exports.findOneLogin = async (req, res) => {
     const validPassword=await bcrypt.compare(password,user.password);
     console.log(user);
     if(validPassword){
-        res.status(200).json({"username":username,"isAdmin":user.isAdmin,token:generateToken(user)});
+        res.status(200).json({"username":username,"isAdmin":user.isAdmin,"userId":user.userId,token:generateToken(user)});
     }
     else{
         res.status(401).json({message:"Incorrect Credentials"});

@@ -8,5 +8,7 @@ module.exports = app => {
     router.route("/getAllLeagues").get(checkLogin,leagues.getLeaguesForJoin);
     router.post("/create",checkLogin,leagues.createLeague);
     router.post("/join",checkLogin,leagues.joinLeague);
+    router.put("/startDraft",checkLogin,leagues.startDraft);
+    router.put("/finishDraft",checkLogin,leagues.startDraft);
     app.use("/api/leagues",router);
   };

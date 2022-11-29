@@ -44,9 +44,6 @@ const AddPlayers = () => {
     {confirm &&<Message variant="info">{confirm}</Message>}
         <CSVReader
             onUploadAccepted={(results) => {
-                console.log('---------------------------');
-                console.log(results);
-                console.log('---------------------------');
                 setPlayers(results.data);
             }}
             >

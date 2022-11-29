@@ -2,10 +2,12 @@ const db = require("../models");
 const User = db.users;
 const League = db.leagues;
 const Team = db.teams;
+const Draft= db.drafts;
 const Op = db.Sequelize.Op;
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
 const bcrypt=require("bcrypt");
+const e = require("express");
 exports.getLeagues = async (req, res) => {
   console.log(req.user);
   try {
@@ -179,5 +181,72 @@ exports.getLeagueInfo=async(req,res)=>{
   }
   catch(error){
     res.status(400).json({ message: error.message });
+  }
+}
+exports.startDraft=async(req,res)=>{
+  try{
+    const teams=await Team.count({
+      where:{
+        leagueId:req.body.leagueId
+      }
+    })
+    if(teams>1){
+      const league=await League.findByPk(req.body.leagueId);
+      if(league){
+        league.draftStatus="ONGOING",
+        league.isStarted=true
+        await league.save();
+        const teams=await Team.findAll({
+          attributes:["userId"],
+          where:{
+              leagueId:req.body.leagueId
+          },
+          order: sequelize.random()
+      })
+      console.log(teams);
+      const reversed=[...teams].reverse();
+      let o=0;
+      for(let i=0;i<6;i++){
+          if(i%2==0){
+              teams.forEach(async team => {
+                  o=o+1;
+                  await Draft.create({
+                      userId:team.userId,
+                      leagueId:req.body.leagueId,
+                      pickOrder:o
+                  })
+              });
+          }
+          else{
+              reversed.forEach(async team => {
+                  o=o+1;
+                  await Draft.create({
+                      userId:team.userId,
+                      leagueId:req.body.leagueId,
+                      pickOrder:o
+                  })
+              });
+          }
+      }
+      res.status(200).json({message:"Draft started"});
+      }
+      else{
+        res.status(400).json({ message: "No League Exists" });
+      }
+    }
+    else{
+      res.status(400).json({message:"There must be at least two teams"});
+    }
+  }catch(error){
+    res.status(400).json({ message: error.message });
+  }
+}
+exports.finishDraft=async(req,res)=>{
+  try{
+    const league=await League.findByPk(req.body.leagueId);
+    league.draftStatus="FINISHED";
+    await league.save();
+  }catch(error){
+    res.status(400).json({message:error.message});
   }
 }

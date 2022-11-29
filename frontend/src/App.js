@@ -15,6 +15,10 @@ import ProfilePage from './screens/ProfilePage/ProfilePage';
 import LeaguePage from './screens/LeaguePage/LeaguePage';
 import ForgotPasswordPage from './screens/ResetPasswordPages/ForgotPasswordPage';
 import PasswordResetPage from './screens/ResetPasswordPages/PasswordResetPage';
+import DraftPage from './screens/DraftPage/DraftPage';
+import TeamPage from './screens/TeamPage/TeamPage';
+import AddPerformances from './screens/AdminPages/AddPerformances';
+import TradePage from './screens/TradePage/TradePage';
 const App=()=> (
   <BrowserRouter>
     <Header/>
@@ -28,14 +32,20 @@ const App=()=> (
           <Route path=":token" element={<PasswordResetPage/>} exact/>
         </Route>
         <Route path="/home" element={<HomePage/>} exact/>
-        <Route path="/admin/addPlayers" element={<AddPlayers/>} exact/>
+        <Route path="/admin">
+          <Route path="addPlayers" element={<AddPlayers/>} exact/>
+          <Route path="addPerformances" element={<AddPerformances/>} exact/>
+        </Route>
         <Route path="/createLeague" element={<CreateLeaguePage/>} exact/>
         <Route path="/joinLeague" element={<JoinLeaguePage/>} exact/>
         <Route path="/profile" element={<ProfilePage/>} exact/>
         <Route path="/league">
           <Route path=":leagueId"element={<LeaguePage/>}exact/>
+          <Route path="draft/:leagueId" element={<DraftPage/>}exact/>
         </Route>
-        <Route path="/chats" element={<ChatPage/>}>
+        <Route path='/team'>
+          <Route path=':teamId' element={<TeamPage/>}exact/>
+          <Route path="trade/:teamId" element={<TradePage/>}exact/>
         </Route>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>

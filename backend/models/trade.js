@@ -7,18 +7,18 @@ module.exports = (sequelize, Sequelize) => {
       },
       status:{
         type:Sequelize.STRING,
-        defaultValue:"pending"
+        defaultValue:"PENDING"
       },
-      requestedPlayer:{
+      wantedPlayer:{
         type:Sequelize.INTEGER
       },
       offeredPlayer:{
         type:Sequelize.INTEGER
       },
-      offerTeam:{
+      sender:{
         type:Sequelize.INTEGER
       },
-      receiveTeam:{
+      receiver:{
         type:Sequelize.INTEGER
       }
     });
