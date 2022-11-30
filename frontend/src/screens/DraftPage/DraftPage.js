@@ -7,7 +7,7 @@ import Message from '../../components/Message';
 import io from 'socket.io-client'
 import PlayerTable from '../../components/PlayerTable';
 var config;
-const ENDPOINT="http://localhost:5000";//change for deploy
+const ENDPOINT="https://league-fantasy-pro.herokuapp.com/";//change for deploy
 var socket;
 const DraftPage = () => {
     const {leagueId}=useParams();
