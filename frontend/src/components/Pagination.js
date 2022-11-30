@@ -8,7 +8,7 @@ const Pagination = ({totalPosts,postsPerPage,setCurrentPage,currentPage}) => {
     }
   return (
     <div className='d-flex justify-content-center'>
-         {pages.map((page,index)=>(
+         {pages.length>1&&pages.map((page,index)=>(
             <Button className={page==currentPage?'active':''+' mx-1'} key={index} onClick={()=>setCurrentPage(page)}>{page}</Button>
          ))}
     </div>

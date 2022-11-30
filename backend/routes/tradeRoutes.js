@@ -5,5 +5,7 @@ module.exports = app => {
     var router = express.Router();
     router.route("/getTrades/:teamId").get(checkLogin,trades.getTrades);
     router.route("/getAvailablePlayers/:teamId").get(checkLogin,trades.getAvailablePlayers);
+    router.post("/createTrade",checkLogin,trades.createTrade);
+    router.put("/changeStatus",checkLogin,trades.changeStatus);
     app.use("/api/trades",router);
   };

@@ -5,6 +5,7 @@ import {Button, Card, Form, Table} from 'react-bootstrap';
 import Pagination from '../../components/Pagination';
 import Message from '../../components/Message';
 import io from 'socket.io-client'
+import PlayerTable from '../../components/PlayerTable';
 var config;
 const ENDPOINT="http://localhost:5000";//change for deploy
 var socket;
@@ -82,12 +83,11 @@ const DraftPage = () => {
         }
     }
     const draftPlayer=async()=>{
-        if(currentPick){
+        if(playerChosen){
             try{
-                console.log(currentPick.draftId);
                 const response=await axios.put("/api/drafts/addPlayer",{
                     leagueId:leagueId,
-                    playerId:playerChosen,
+                    playerId:playerChosen.playerId,
                     draftId:currentPick.draftId
                 },config)
                 if(response){
@@ -95,6 +95,11 @@ const DraftPage = () => {
                     getPickOrder();
                     setError(false);
                     if(currentPick==null){
+                        console.log("FINISHED");
+                        finishDraft();
+                    }
+                    else if(currentPick==pickOrder[pickOrder.length-1]){
+                        console.log("FINISHED");
                         finishDraft();
                     }
                 }
@@ -104,38 +109,6 @@ const DraftPage = () => {
         }else{
             setError("You Must Select a Player");
         }
-    }
-    const sortingString=(col)=>{
-        if(orderDirection==="ASC"){
-            const sorted=[...players].sort((a,b)=>
-              a[col].toLowerCase()>b[col].toLowerCase()?1:-1
-              )
-              setPlayers(sorted);
-              setOrderDirection("DSC")
-          }
-          else{
-            const sorted=[...players].sort((a,b)=>
-            a[col].toLowerCase()<b[col].toLowerCase()?1:-1
-            )
-            setPlayers(sorted);
-            setOrderDirection("ASC")
-          }
-    }
-    const sortingNumber=(col)=>{
-        if(orderDirection==="ASC"){
-            const sorted=[...players].sort((a,b)=>
-              Number(a[col])>Number(b[col])?1:-1
-              )
-              setPlayers(sorted);
-              setOrderDirection("DSC")
-          }
-          else{
-            const sorted=[...players].sort((a,b)=>
-            Number(a[col])<Number(b[col])?1:-1
-            )
-            setPlayers(sorted);
-            setOrderDirection("ASC")
-          }
     }
   return (
     <div className='container'>
@@ -174,7 +147,7 @@ const DraftPage = () => {
                 placeholder="Search for players name"
             />
             <div className='playerTable'>
-                <Table className='text-center draftTable' striped hover>
+                {/* <Table className='text-center draftTable' striped hover>
                     <thead>
                         <tr>
                             <th onClick={()=>sortingString("gameName")}>Game Name{'\u2195'}</th>
@@ -206,7 +179,13 @@ const DraftPage = () => {
                 </tr>
                 }
                     </tbody>
-                </Table>
+                </Table> */}
+                <PlayerTable
+                 playerChosen={playerChosen}
+                setPlayerChosen={setPlayerChosen} 
+                setPlayers={setPlayers} 
+                currentPlayers={currentPlayers}
+                players={players}/>
             </div>
             
             <Pagination

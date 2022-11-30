@@ -130,12 +130,12 @@ const LeaguePage = () => {
           </div>
           <div className="matches col-md-6 col-sm-12">
             <h2 className='text-center'>League Match History</h2>
-            <Accordion>
+            <Accordion >
             {performances?
             performances.map((performance)=>(
-              <Accordion.Item eventKey={performance.teamPerformanceId} key={performance.teamPerformanceId}>
+              <Accordion.Item  eventKey={performance.teamPerformanceId} key={performance.teamPerformanceId}>
                 <Accordion.Header onClick={()=>getDetailedMatchHistory(performance.top,performance.jungle,performance.middle,performance.adc,performance.support)}>Week {performance.week} {performance.score} Points</Accordion.Header>
-                <Accordion.Body>
+                <Accordion.Body className='weeklyPerformance'>
                   <PerformanceTable performances={detailedPerformances}/>
                 </Accordion.Body>
               </Accordion.Item>))

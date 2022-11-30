@@ -82,7 +82,9 @@ const TeamPage = () => {
         {error && <Message variant='danger'>{error}</Message>}
         {confirm &&<Message variant="info">{confirm}</Message>}
         <Button onClick={()=>navigate('/league/'+team.leagueId)}>Back To League Page</Button>
+        {userId==team.userId&&
         <Button className="my-3 ms-3" onClick={()=>navigate('/team/trade/'+teamId)}>Trades Page</Button>
+        }
         <h2>{team.teamName}  - {team.points} POINTS</h2>
         <Table striped hover>
             <thead>

@@ -41,10 +41,6 @@ db.playerPerformances.belongsTo(db.players,{
   foreignKey:"playerId",
   as:"playerPerformances"
 });
-db.trades.belongsTo(db.leagues,{
-  foreignKey:"leagueId",
-  as:"leagues"
-})
 db.messages.belongsTo(db.users,{
   foreignKey:"userId",
   as:"users"

@@ -9,6 +9,6 @@ module.exports = app => {
     router.post("/create",checkLogin,leagues.createLeague);
     router.post("/join",checkLogin,leagues.joinLeague);
     router.put("/startDraft",checkLogin,leagues.startDraft);
-    router.put("/finishDraft",checkLogin,leagues.startDraft);
+    router.put("/finishDraft",checkLogin,leagues.finishDraft);
     app.use("/api/leagues",router);
   };

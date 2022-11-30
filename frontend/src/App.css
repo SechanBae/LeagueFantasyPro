@@ -35,3 +35,9 @@ ul{
 th{
   cursor: pointer;
 }
+.weeklyPerformance{
+  overflow-x: auto;
+}
+.overflowx{
+  overflow-x: auto;
+}

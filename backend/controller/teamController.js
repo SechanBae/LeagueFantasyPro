@@ -42,22 +42,34 @@ exports.getTeam=async(req,res)=>{
         const team=await Team.findByPk(req.params.teamId);
         const teamPlayers=[];
         if(team.top){
-            teamPlayers.push(await Player.findByPk(team.top))
+            const player=await Player.findByPk((team.top));
+            player["team"]=team.teamName;
+            teamPlayers.push(player);
         }
         if(team.jungle){
-            teamPlayers.push(await Player.findByPk(team.jungle))
+            const player=await Player.findByPk((team.jungle));
+            player["team"]=team.teamName;
+            teamPlayers.push(player);
         }
         if(team.middle){
-            teamPlayers.push(await Player.findByPk(team.middle))
+            const player=await Player.findByPk((team.middle));
+            player["team"]=team.teamName;
+            teamPlayers.push(player);
         }
         if(team.adc){
-            teamPlayers.push(await Player.findByPk(team.adc))
+            const player=await Player.findByPk((team.adc));
+            player["team"]=team.teamName;
+            teamPlayers.push(player);
         }
         if(team.support){
-            teamPlayers.push(await Player.findByPk(team.support))
+            const player=await Player.findByPk((team.support));
+            player["team"]=team.teamName;
+            teamPlayers.push(player);
         }
         if(team.sub){
-            teamPlayers.push(await Player.findByPk(team.sub))
+            const player=await Player.findByPk((team.sub));
+            player["team"]=team.teamName;
+            teamPlayers.push(player);
         }
         res.status(200).json({team,teamPlayers});
     }catch(error){
