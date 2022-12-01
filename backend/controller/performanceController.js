@@ -34,7 +34,8 @@ exports.addPerformance=async(req,res)=>{
         const leagues=await League.findAll({
             attributes:["leagueId"],
             where:{
-                draftStatus:"FINISHED"
+                draftStatus:"FINISHED",
+                isDone:false
             }
         });
         

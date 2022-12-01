@@ -20,7 +20,6 @@ const LoginPage = () => {
 
     const submitHandler=async (e)=>{
         e.preventDefault();
-        console.log(username,password);
         try {
 
             setLoading(true);
@@ -35,7 +34,6 @@ const LoginPage = () => {
             setLoading(false);
             window.location.reload();
         } catch (error) {
-            console.log(error);
             setError(error.response.data.message);
             setLoading(false);
         }

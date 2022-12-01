@@ -3,8 +3,6 @@ import { Button, Card } from 'react-bootstrap'
 
 const LeagueList = ({leagues}) => {
     useEffect(() => {
-      console.log(leagues);
-    
     }, [])
     
   return (

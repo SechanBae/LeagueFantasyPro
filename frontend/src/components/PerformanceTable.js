@@ -6,7 +6,6 @@ const PerformanceTable = ({performances}) => {
     const [array, setArray] = useState(0)
     useEffect(() => {
         if(performances&&players.length==0){
-            console.log("hello");
             players.push(performances.find(p=>p.playerPerformances.position==="top"));
             players.push(performances.find(p=>p.playerPerformances.position==="jungle"));
             players.push(performances.find(p=>p.playerPerformances.position==="middle"));

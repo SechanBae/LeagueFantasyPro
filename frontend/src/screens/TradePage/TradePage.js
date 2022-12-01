@@ -45,7 +45,6 @@ const TradePage = () => {
       );
       setReceived(response.data.rTrades);
       setSent(response.data.sTrades);
-      console.log(response.data);
     } catch (error) {
       setError(error.reponse.data.message);
       setConfirm(false);
@@ -57,7 +56,6 @@ const TradePage = () => {
         "/api/trades/getAvailablePlayers/" + teamId,
         config
       );
-      console.log(response.data);
       setAvailablePlayers(response.data.players);
     } catch (error) {
       setError(error.reponse.data.message);
@@ -67,7 +65,6 @@ const TradePage = () => {
   const getTeamPlayers = async () => {
     try {
       const response = await axios.get("/api/teams/getTeam/" + teamId, config);
-      console.log(response.data);
       if ((await response.data.team.userId) != userId) {
         navigate("/team/" + teamId);
       }
@@ -81,15 +78,16 @@ const TradePage = () => {
     if (!wantPlayerChosen || !teamPlayerChosen) {
       setConfirm(false);
       setError("You Must Choose Players To Trade");
+      setConfirm(false);
       return;
     }
     if (wantPlayerChosen.position != teamPlayerChosen.position) {
       setConfirm(false);
       setError("You Must Choose Players In The Same Position To Trade");
+      setConfirm(false);
       return;
     }
     try {
-      console.log("hello");
       const response = await axios.post(
         "/api/trades/createTrade",
         {
@@ -103,6 +101,7 @@ const TradePage = () => {
       if (response) {
         getTrades();
         setConfirm("Trade Offer Has Been Submitted");
+        setError(false);
       }
     } catch (error) {
       setError(error.reponse.data.message);
@@ -123,7 +122,6 @@ const TradePage = () => {
             getTrades();
             setConfirm("Trade Offer Has Been Changed");
         }
-        console.log(newStatus);
     }catch(error){
       setError(error.reponse.data.message);
       setConfirm(false);
