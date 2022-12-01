@@ -2,8 +2,8 @@ const db=require("../models");
 const Player=db.players;
 const League=db.leagues;
 exports.addPlayers=async(req,res)=>{
-    console.log(req.body.playersJSON);
-    Player.bulkCreate(req.body.playersJSON)
+    if(req.user.isAdmin){
+        Player.bulkCreate(req.body.playersJSON)
         .then(players=>{
             res.status(200).json({players});
         })
@@ -11,6 +11,10 @@ exports.addPlayers=async(req,res)=>{
             console.log(error);
             res.status(400).json({message:error.message});
         })
+    }
+    else{
+        res.status(400).json({message:"You are not an admin"});
+    }
 }
 exports.getPlayers=async(req,res)=>{
     try{

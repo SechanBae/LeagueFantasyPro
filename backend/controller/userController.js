@@ -72,20 +72,23 @@ exports.getProfile=async (req,res)=>{
     })
 }
 exports.changeEmail=async(req,res)=>{
-    User.findOne({
-        where:{email:req.user.email}
-    })
-    .then((user)=>{
-        user.email=req.body.email;
-        user.save()
-        .then((user)=>{
-            res.status(200).json({message:"success"})
+    try {
+        const emailTaken=await User.findOne({
+            where:{email:req.body.email}
         })
-    })
-    .catch((error)=>{
-        res.status(404).json({ message: error.message })
-    })
+        if(emailTaken){
+            res.status(400).json({message:"There is a user with that email"});
+        }
+        else{
+            const user=await User.findByPk(req.user.userId);
+            user.email=req.body.email;
+            await user.save();
+            res.status(200).json({message:"success"})
 
+        }
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
 }
 exports.changePassword=async(req,res)=>{
     const salt=await bcrypt.genSalt(10);

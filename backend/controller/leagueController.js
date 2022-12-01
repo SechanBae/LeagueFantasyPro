@@ -92,12 +92,20 @@ exports.joinLeague = async (req, res) => {
       type: QueryTypes.SELECT,
       } 
     )
-    
+    const checkName=await Team.findOne({
+      where:{
+        teamName:req.body.teamName,
+        leagueId:req.body.leagueId
+      }
+    })
     if (alreadyJoined.length) {
       res.status(400).json({ message: "You are already in this league" });
     }
     else if(checkCapacity.capacity==6){  
       res.status(400).json({ message: "This league has reached max capacity" });
+    }
+    else if(checkName){
+      res.status(400).json({ message: "This league has a team with that name already" });
     }
     else {
         const teamData = {

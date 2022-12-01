@@ -2,57 +2,47 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import LeagueList from '../../components/LeagueList';
 import Message from '../../components/Message';
-
+var config;
 const HomePage = () => {
     const [leagues,setLeagues]=useState(false);
     const [error,setError]=useState(false);
     const navigate=useNavigate(); 
     useEffect(()=>{
-        async function getNotes(){
-            try{
-                const userInfo=sessionStorage.getItem("userInfo");
-                if(!userInfo){
-                    navigate("/");
-                }
-                else{
-                    const config={
-                        headers:{
-                            Authorization:'Bearer '+JSON.parse(userInfo).token,
-                        },
-                    }
-                    const response=await axios.get('/api/leagues/',config);
-                    setLeagues(response.data.leagues);
-                }
-            }
-            catch(error){
-                console.log(error);
-                setError(error.response.data.message);
-            }
+        const userInfo=sessionStorage.getItem("userInfo");
+        if(!userInfo){
+            navigate("/");
         }
-        getNotes();
+        else{
+            config={
+              headers:{
+                  Authorization:'Bearer '+JSON.parse(userInfo).token,
+              },
+            }
+            getLeagues();
+          }
     },[])
+    const getLeagues=async()=>{
+        try {
+          const response=await axios.get('/api/leagues/',config);
+          console.log(response.data);
+          setLeagues(response.data.leagues);
+        } catch (error) {
+          setError(error.response.data.message);
+        }
+      }
     return (
         <div className='container'>
         {error && <Message variant='danger'>{error}</Message>}
             <h2>Your Leagues</h2>
-            {leagues?
-            
-            leagues.map((league)=>(
-                <Card key={league.leagueId}>
-                    <Card.Header as="h5">League: {league.name}</Card.Header>
-                    <Card.Body>
-                        <Card.Title>Team Name: {league.teamName}</Card.Title>
-                        <Card.Text>
-                        Your team currently has {league.points} points.
-                        </Card.Text>
-                        <Button variant="info" href={"/league/"+league.leagueId}>Go to League Page</Button>
-                    </Card.Body>
-                </Card>
-            ))
-            :<h5>You are currently not in any leagues</h5>
-            }
-            <div className='row mt-5 '>
+            <h5 className='my-3'>Leagues - Waiting For Draft</h5>
+            {leagues&&<LeagueList leagues={leagues.filter(league=>league.isDone===0&&league.draftStatus!=="FINISHED")}/>}
+            <h5 className='my-3'>Leagues - Ongoing</h5>
+            {leagues&&<LeagueList leagues={leagues.filter(league=>league.isDone===0&&league.draftStatus==="FINISHED")}/>}
+            <h5 className='my-3'>Leagues - Finished</h5>
+            {leagues&&<LeagueList leagues={leagues.filter(league=>league.isDone===1&&league.draftStatus==="FINISHED")}/>}
+            <div className='row my-5 '>
                 <div className='col d-flex justify-content-center'>
                     <Button variant="success"  href="/createLeague">Create Your Own League</Button>
                 </div>

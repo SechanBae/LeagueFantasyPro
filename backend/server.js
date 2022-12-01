@@ -16,6 +16,7 @@ require("./routes/playerRoutes")(app);
 require("./routes/teamRoutes")(app);
 require("./routes/performanceRoutes")(app);
 require("./routes/tradeRoutes")(app);
+require("./routes/messageRoutes")(app);
 
 const __dirname1=path.resolve();
 if(process.env.NODE_ENV=="production"){
@@ -49,5 +50,8 @@ io.on("connection",(socket)=>{
     console.log("Connected to Socket");
     socket.on("draftPickSubmit",(leagueId)=>{
         socket.broadcast.emit("draftPickBroadcast",leagueId);
+    })
+    socket.on("messageSubmit",(leagueId)=>{
+        socket.broadcast.emit("messageBroadcast",leagueId);
     })
 })

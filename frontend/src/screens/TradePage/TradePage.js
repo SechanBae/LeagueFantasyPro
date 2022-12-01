@@ -150,6 +150,7 @@ const TradePage = () => {
     <div className="container">
       {confirm && <Message variant="info">{confirm}</Message>}
       {error && <Message variant="danger">{error}</Message>}
+      <Button onClick={()=>navigate('/team/'+teamId)}>Back To Team Page</Button>
       <h2>Trades</h2>
       <Button
         onClick={() => setToggleCreate(!toggleCreate)}

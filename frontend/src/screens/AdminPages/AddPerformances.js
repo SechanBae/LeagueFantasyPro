@@ -1,15 +1,23 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
 
 import { useCSVReader } from 'react-papaparse';
+import { useNavigate } from 'react-router-dom';
 import Message from '../../components/Message';
+var config;
 const AddPerformances = () => {
   const [performances,setPerformances]=useState();
   const [error,setError]=useState(false);
   const [confirm,setConfirm]=useState(false);
   const [week,setWeek]=useState(0);
+  const [sure,setSure]=useState(false);
+  const navigate=useNavigate();
   const addPerformances=async()=>{
+    if(performances[0][0]!=="playerId"&&performances[0][1]!=="totalKills"&&performances[0][2]!=="totalDeaths"&&performances[0][3]!=="totalAssists"&&performances[0][4]!=="totalCS"){
+        setError("File not in correct format");
+        return;
+    }
     if(week<10&&week>0){
         setPerformances(performances.pop());
         let performancesJSON=[];
@@ -29,7 +37,7 @@ const AddPerformances = () => {
             const {data}=await axios.post('/api/performances/addPerformances',{
                 performancesJSON,
                 week:week
-            });
+            },config);
             if(data){
                 setConfirm("Performances successfully added.");
                 setError(false);
@@ -45,10 +53,39 @@ const AddPerformances = () => {
     }
     
   }
+  const finishHandler=async()=>{
+    try {
+        console.log("hello");
+        const response=await axios.put("/api/performances/finishSeason",{},config);
+        if(response){
+            setConfirm("Season has completed");
+            setError(false);
+        }
+    } catch (error) {
+        setConfirm(false);
+        setError(error.response.data.message);
+    }
+  }
   const { CSVReader } = useCSVReader();
+  useEffect(()=>{
+    const userInfo=sessionStorage.getItem("userInfo");
+    if(!userInfo){
+        navigate("/");
+    }
+    else{
+      config={
+        headers:{
+            Authorization:'Bearer '+JSON.parse(userInfo).token,
+        },
+    }
+    }
+  })
   return (
     <div className="container">
         <h2>Add Performances</h2>
+        <p className='wrapText'>CSV File must follow the following format:
+         first row - playerId,totalKills,totalDeaths,totalAssists,totalCS
+        followed by the performance information on each row</p>
         {error && <Message variant='danger'>{error}</Message>}
         {confirm &&<Message variant="info">{confirm}</Message>}
         <div>
@@ -82,7 +119,7 @@ const AddPerformances = () => {
                     <p>Week</p>
                     <input placeholder='Enter Week Number' className='my-3' type='number' value={week} onChange={(e)=>setWeek(e.target.value)}/>
                     <br></br>
-<Button onClick={addPerformances}>
+                <Button onClick={addPerformances}>
                     Add Performances
                 </Button>
                 
@@ -96,7 +133,13 @@ const AddPerformances = () => {
         </CSVReader>
         
         </div>
-        
+        {sure?
+        <div>
+            <Button variant="danger" className='d-flex ms-auto my-3' onClick={()=>setSure(false)}>Cancel</Button>
+            <Button variant="success" className='d-flex ms-auto my-3' onClick={()=>finishHandler()}>Confirm Finish</Button>
+        </div>:
+        <Button className='d-flex ms-auto' variant="success" onClick={()=>setSure(true)}>Finish Season</Button>
+        }
     </div>
    
   )

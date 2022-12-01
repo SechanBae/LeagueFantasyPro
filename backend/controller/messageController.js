@@ -9,7 +9,7 @@ exports.sendMessage=async(req,res)=>{
     try{
         const messageData={
             userId:req.user.userId,
-            content:req.body.message,
+            content:req.body.content,
             leagueId:req.body.leagueId
         }
         const message=await Message.create(messageData);
@@ -26,7 +26,12 @@ exports.getSingleMessage=async(req,res)=>{
                 leagueId:req.params.leagueId,
                 userId:req.params.userId
             },
-            order:[['createdAt','DESC']]
+            order:[['createdAt','DESC']],
+            include:{
+                model:User,
+                as:"users",
+                attributes:["username"]
+            }
         })
         res.status(200).json({message});
     } catch (error) {
@@ -38,6 +43,12 @@ exports.getAllMessages=async(req,res)=>{
         const messages=await Message.findAll({
             where:{
                 leagueId:req.params.leagueId
+            },
+            include:{
+                        
+                model:User,
+                as:"users",
+                attributes:["userId","username"]
             }
         })
         res.status(200).json({messages});

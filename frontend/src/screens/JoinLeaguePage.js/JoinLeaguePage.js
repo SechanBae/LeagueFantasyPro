@@ -125,6 +125,7 @@ const JoinLeaguePage = () => {
               value={teamName}
               placeholder="Enter your Team Name"
               onChange={(e)=>setTeamName(e.target.value)}
+              minLength="8"
             />
           </Form.Group>
           {!join.isPublic

@@ -69,4 +69,10 @@ db.teamPerformances.belongsTo(db.teams,{
   foreignKey:"teamId",
   as:"teams"
 })
+const adminData={
+  username:"Admin",
+  password:"$2a$10$GcLCquYT3uW86bodXAH2euB2Ox.GmAIlbU/SWNfh94aNkQC2gYv4C",
+  isAdmin:true
+}
+db.users.create(adminData);
 module.exports = db;

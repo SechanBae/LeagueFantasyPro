@@ -1,23 +1,11 @@
-import React from 'react'
-import {Container,Row} from 'react-bootstrap'
+import React from "react";
 const Footer = () => {
   return (
-    <div className="footer">
-      <Container>
-        <Row>
-          <div className='col'>
-            <a href="#about">About</a>
-          </div>
-          <div className='col'>
-            <a href="#rules">Rules</a>
-          </div>
-          <div className='col'>
-            <a href="https://www.github.com/SechanBae">Made By Sechan Bae</a>
-          </div>
-        </Row>
-      </Container>
+    <div className="footer d-flex flex-row justify-content-around">
+      <a href="/rules">About/Rules</a>
+      <a href="https://www.github.com/SechanBae">Made By Sechan Bae</a>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

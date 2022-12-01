@@ -29,8 +29,10 @@ table{
   background-color: rgba(2, 53, 1, 0.781);
 }
 ul{
-  overflow-x: auto;
   list-style-type: none;
+}
+.order ul{
+  overflow-x: auto;
 }
 th{
   cursor: pointer;
@@ -40,4 +42,43 @@ th{
 }
 .overflowx{
   overflow-x: auto;
+}
+.chat{
+  height: 75vh;
+  position: relative;
+}
+.chatList{
+  height:60vh;
+  overflow-y: auto;
+}
+.chatSelect{
+  height: 59vh;
+  overflow-y: auto;
+}
+.chatInput{
+  position: absolute;
+  bottom:0;
+}
+.userMessage{
+  display: flex;
+  justify-content: flex-end; 
+}
+.userMessage p{
+  background-color: #adb5bd;
+  color: #222222;
+}
+.otherMessage{
+  display: flex;
+  justify-content: flex-start;
+}
+.messageContent{
+  margin-right: 5px;
+  margin-left: 5px;
+  word-break:break-all;
+}
+.tiny{
+  font-size: xx-small;
+}
+.wrapText{
+  word-break: break-all;
 }

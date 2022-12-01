@@ -10,7 +10,8 @@ const checkLogin=async function(req,res,next){
             token=req.headers.authorization.split(" ")[1];
 
             const decoded=jwt.verify(token,process.env.JWT_SECRET);
-            const user=await User.findByPk(decoded.id.userId,{attributes:['userId','username','email','isMuted','isAdmin']});
+            console.log(decoded);
+            const user=await User.findByPk(decoded.id.userId,{attributes:['userId','username','email','isAdmin']});
             console.log(user);
             req.user=user.dataValues;
             next();

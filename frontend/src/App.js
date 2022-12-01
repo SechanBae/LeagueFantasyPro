@@ -19,6 +19,7 @@ import DraftPage from './screens/DraftPage/DraftPage';
 import TeamPage from './screens/TeamPage/TeamPage';
 import AddPerformances from './screens/AdminPages/AddPerformances';
 import TradePage from './screens/TradePage/TradePage';
+import RulesPage from './screens/RulesPage/RulesPage';
 const App=()=> (
   <BrowserRouter>
     <Header/>
@@ -47,6 +48,8 @@ const App=()=> (
           <Route path=':teamId' element={<TeamPage/>}exact/>
           <Route path="trade/:teamId" element={<TradePage/>}exact/>
         </Route>
+        <Route path='/chat' element={<ChatPage/>} exact/>
+        <Route path='/rules' element={<RulesPage/>}exact/>
         <Route path="*" element={<NotFoundPage/>}/>
       </Routes>
     </main>

@@ -140,3 +140,25 @@ exports.getDetailedPerformances=async(req,res)=>{
         res.status(400).json({message:error.message});
     }
 }
+exports.finishSeason=async(req,res)=>{
+    if(req.user.isAdmin){ 
+        try {
+            await League.update({isDone:true},{
+                where:{
+                    isDone:false
+                }
+            })
+            await Player.update({pastPlayer:true},{
+                where:{
+                    pastPlayer:false
+                }
+            })
+            res.status(200).json({message:"Finished"});
+        } catch (error) {
+            res.status(400).json({message:error.message});
+        }
+    }
+    else{
+        res.status(400).json({message:"You are not an admin"});
+    }
+}
