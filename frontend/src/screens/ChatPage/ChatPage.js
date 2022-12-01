@@ -4,7 +4,7 @@ import { Card, CloseButton, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import io from 'socket.io-client'
 import Message from '../../components/Message';
-const ENDPOINT="http://localhost:5000";//change for deploy
+const ENDPOINT = "https://league-fantasy-pro.herokuapp.com/"; //change for deploy
 var socket;
 var config;
 var userId;
