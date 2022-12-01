@@ -121,8 +121,8 @@ const LeaguePage = () => {
                   </Card.Body>
 
                 </Card>
-                <Button variant='outline-light' size='sm' className='col-3' onClick={()=>getMatchHistory(team.teamId)}>
-                    <h3>{team.points} - PTS</h3>
+                <Button variant='outline-light' size='sm' className='col-3 my-3' onClick={()=>getMatchHistory(team.teamId)}>
+                    <h5>{team.points} - PTS</h5>
                 </Button>
               </div>
             ))

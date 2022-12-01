@@ -140,7 +140,6 @@ exports.changeStatus=async(req,res)=>{
         }
         else if(req.body.newStatus=="ACCEPTED"){
             const trade=await Trade.findByPk(req.body.tradeId);
-            trade.status=req.body.newStatus;
             const sender=await Team.findByPk(trade.sender);
             const offeredPlayer=await Player.findByPk(trade.offeredPlayer);
             var senderRole;
@@ -161,9 +160,6 @@ exports.changeStatus=async(req,res)=>{
             }
             sender[senderRole]=wantedPlayer.playerId;
             receiver[receiverRole]=offeredPlayer.playerId;
-            await trade.save();
-            await sender.save();
-            await receiver.save();
             await Trade.update({status:"EXPIRED"},
                 {
                     where:{
@@ -205,6 +201,11 @@ exports.changeStatus=async(req,res)=>{
                     }
                 }
             );
+            trade.status=req.body.newStatus;
+            await trade.save();
+            await sender.save();
+            await receiver.save();
+            
             
         }
     }catch(error){

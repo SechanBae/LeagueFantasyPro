@@ -10,7 +10,27 @@ const { QueryTypes } = require("sequelize");
 exports.addPerformance=async(req,res)=>{
     console.log(req.body);
     try{
-        const performances=await PlayerPerformance.bulkCreate(req.body.performancesJSON);
+        const performances=req.body.performancesJSON;
+        performances.forEach(async performance => {
+            
+            console.log(performance)
+            const p=await Player.findOne({
+                where:{
+                    gameName:performance.gameName,
+                    pastPlayer:false
+                }
+            });
+            console.log(await p);
+            await PlayerPerformance.create({
+                playerId:p.playerId,
+                week:performance.week,
+                totalKills:performance.totalKills,
+                totalDeaths:performance.totalDeaths,
+                totalAssists:performance.totalAssists,
+                totalCS:performance.totalCS,
+                totalScore:performance.totalScore,
+            })
+        });
         const leagues=await League.findAll({
             attributes:["leagueId"],
             where:{

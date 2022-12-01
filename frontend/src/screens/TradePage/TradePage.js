@@ -288,7 +288,7 @@ const TradePage = () => {
           Expired
         </Button>
       </div>
-      <div className="d-flex justify-content-center flex-column">
+      <div className="d-flex justify-content-center flex-column my-3">
         {selected == "received" &&
           received &&
           received

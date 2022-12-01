@@ -66,6 +66,7 @@ const RegisterPage = () => {
                         placeholder="Enter username"
                         value={username}
                         onChange={(e)=>setUsername(e.target.value)}
+                        minLength="4"
                       />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="email">

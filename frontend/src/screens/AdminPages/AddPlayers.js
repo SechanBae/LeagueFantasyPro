@@ -16,6 +16,7 @@ const AddPlayers = () => {
     let playersJSON=[];
     if(players[0][0]!=="gameName"&&players[0][1]!=="region"&&players[0][2]!=="position"&&players[0][3]!=="team"&&players[0][4]!=="avgKPG"&&players[0][5]!=="avgDPG"&&players[0][6]!=="avgAPG"&&players[0][7]!=="avgCSPG"){
         setError("File not in correct format");
+        setConfirm(false);
         return;
     }
     for(let i=1;i<players.length;i++){

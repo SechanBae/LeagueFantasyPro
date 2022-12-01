@@ -10,7 +10,7 @@ const TradeCard = ({
   showCompare,
 }) => {
   return (
-    <Card style={{ width: "80vw" }} className="mx-auto my-2">
+    <Card style={{ width: "65vw" }} className="mx-auto my-2">
       <Card.Body>
         <h5 className="text-center">{trade.trade.status}</h5>
         {variant == "sent" ? (

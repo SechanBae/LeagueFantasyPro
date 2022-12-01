@@ -178,7 +178,10 @@ exports.getLeagueInfo=async(req,res)=>{
           model:User,
           as:"users",
           attributes:["username"]
-        }
+        },
+        order:[
+          ["points","desc"]
+        ]
           
       })
       res.status(200).json({league,teams});

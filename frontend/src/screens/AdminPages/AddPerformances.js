@@ -14,8 +14,9 @@ const AddPerformances = () => {
   const [sure,setSure]=useState(false);
   const navigate=useNavigate();
   const addPerformances=async()=>{
-    if(performances[0][0]!=="playerId"&&performances[0][1]!=="totalKills"&&performances[0][2]!=="totalDeaths"&&performances[0][3]!=="totalAssists"&&performances[0][4]!=="totalCS"){
+    if(performances[0][0]!=="gameName"&&performances[0][1]!=="totalKills"&&performances[0][2]!=="totalDeaths"&&performances[0][3]!=="totalAssists"&&performances[0][4]!=="totalCS"){
         setError("File not in correct format");
+        setConfirm(false);
         return;
     }
     if(week<10&&week>0){
@@ -84,7 +85,7 @@ const AddPerformances = () => {
     <div className="container">
         <h2>Add Performances</h2>
         <p className='wrapText'>CSV File must follow the following format:
-         first row - playerId,totalKills,totalDeaths,totalAssists,totalCS
+         first row - gameName,totalKills,totalDeaths,totalAssists,totalCS
         followed by the performance information on each row</p>
         {error && <Message variant='danger'>{error}</Message>}
         {confirm &&<Message variant="info">{confirm}</Message>}
@@ -117,7 +118,7 @@ const AddPerformances = () => {
                 {acceptedFile&&
                 <div>
                     <p>Week</p>
-                    <input placeholder='Enter Week Number' className='my-3' type='number' value={week} onChange={(e)=>setWeek(e.target.value)}/>
+                    <input placeholder='Enter Week Number' className='my-3' type='number' value={week} onChange={(e)=>setWeek(e.target.value)} min="1" step="1" max="9"/>
                     <br></br>
                 <Button onClick={addPerformances}>
                     Add Performances

@@ -82,7 +82,7 @@ const CreateLeaguePage = () => {
               value={name}
               required
               onChange={(e)=>setName(e.target.value)}
-              minLength="8"
+              minLength="6"
             />
           </Form.Group>
           
@@ -96,7 +96,7 @@ const CreateLeaguePage = () => {
               value={teamName}
               placeholder="Team Name"
               onChange={(e)=>setTeamName(e.target.value)}
-              minLength="8"
+              minLength="6"
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="region">
