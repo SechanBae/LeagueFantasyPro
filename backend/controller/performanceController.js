@@ -168,12 +168,25 @@ exports.finishSeason=async(req,res)=>{
         try {
             await League.update({isDone:true},{
                 where:{
-                    isDone:false
+                    isDone:false,
+                    draftStatus:"FINISHED"
                 }
             })
             await Player.update({pastPlayer:true},{
                 where:{
                     pastPlayer:false
+                }
+            })
+            await League.destory({
+                where:{
+                    isDone:false,
+                    draftStatus:"PENDING"
+                }
+            })
+            await League.destory({
+                where:{
+                    isDone:false,
+                    draftStatus:"ONGOING"
                 }
             })
             res.status(200).json({message:"Finished"});
