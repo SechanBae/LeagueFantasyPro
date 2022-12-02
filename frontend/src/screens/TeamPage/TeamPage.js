@@ -85,7 +85,8 @@ const TeamPage = () => {
         <Button className="my-3 ms-3" onClick={()=>navigate('/team/trade/'+teamId)}>Trades Page</Button>
         }
         <h2>{team.teamName}  - {team.points} POINTS</h2>
-        <Table striped hover>
+        <div className='overflowx'>
+            <Table striped hover>
             <thead>
                 <tr>
                     <th></th>
@@ -150,6 +151,8 @@ const TeamPage = () => {
                 <tr><td colSpan={7}>Nobody is in this team yet</td></tr>}
             </tbody>
         </Table>
+        </div>
+        
         {(team&&team.userId==userId)&&
         <div className='d-flex justify-content-center'>
             <Button onClick={substitutePlayer} variant='info'>Substitute Player</Button>
