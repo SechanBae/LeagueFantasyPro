@@ -118,10 +118,9 @@ const TradePage = () => {
         },
         config
         )
-        if (response) {
-            getTrades();
-            setConfirm("Trade Offer Has Been Changed");
-        }
+        getTrades();
+        setConfirm("Trade Offer Has Been Changed");
+        setError(false);
     }catch(error){
       setError(error.reponse.data.message);
       setConfirm(false);
