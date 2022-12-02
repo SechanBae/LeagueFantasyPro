@@ -10,7 +10,7 @@ const LeagueList = ({leagues}) => {
         {leagues.length?  
             (leagues.map((league)=>(
                 <Card key={league.leagueId} style={{minWidth:"15rem"}} className="me-3">
-                    <Card.Header as="h5">League: {league.name}</Card.Header>
+                    <Card.Header as="h5">{league.region} League: {league.name}</Card.Header>
                     <Card.Body>
                         <Card.Title>Team Name: {league.teamName}</Card.Title>
                         <Card.Text>
