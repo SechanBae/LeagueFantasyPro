@@ -101,7 +101,7 @@ exports.joinLeague = async (req, res) => {
     if (alreadyJoined.length) {
       res.status(400).json({ message: "You are already in this league" });
     }
-    else if(checkCapacity.capacity==6){  
+    else if(checkCapacity[0].capacity==6){  
       res.status(400).json({ message: "This league has reached max capacity" });
     }
     else if(checkName){
