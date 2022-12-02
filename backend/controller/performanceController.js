@@ -177,13 +177,13 @@ exports.finishSeason=async(req,res)=>{
                     pastPlayer:false
                 }
             })
-            await League.destory({
+            await League.destroy({
                 where:{
                     isDone:false,
                     draftStatus:"PENDING"
                 }
             })
-            await League.destory({
+            await League.destroy({
                 where:{
                     isDone:false,
                     draftStatus:"ONGOING"
