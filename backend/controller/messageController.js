@@ -31,6 +31,7 @@ exports.getAllMessages=async(req,res)=>{
                 as:"users",
                 attributes:["userId","username"]
             },
+            order:[['createdAt','ASC']],
         })
         res.status(200).json({messages});
     } catch (error) {
