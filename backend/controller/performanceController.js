@@ -13,7 +13,6 @@ exports.addPerformance=async(req,res)=>{
         const performances=req.body.performancesJSON;
         performances.forEach(async performance => {
             
-            console.log(performance)
             const p=await Player.findOne({
                 where:{
                     gameName:performance.gameName,
@@ -94,19 +93,6 @@ exports.addPerformance=async(req,res)=>{
                 await team.save();
             })
         });
-        // const teams=await Team.findAll();
-        // teams.forEach(async team=>{
-        //     sumScore=await sequelize.query(
-        //         "SELECT SUM(score) as sum FROM teamPerformances WHERE teamId=?",
-        //         {
-        //           replacements: [team.teamId],
-        //           type: QueryTypes.SELECT,
-        //         }
-        //       );
-        //     console.log(sumScore[0].sum);
-        //     team.points=sumScore[0].sum;
-        //     await team.save();
-        // })
         res.status(200).json({});
     }catch(error){
         res.status(400).json({message:error.message});
@@ -187,6 +173,13 @@ exports.finishSeason=async(req,res)=>{
                 where:{
                     isDone:false,
                     draftStatus:"ONGOING"
+                }
+            })
+            await Team.destory({
+                where:{
+                    leagueId:{
+                        [Op.is]:null,
+                    }
                 }
             })
             res.status(200).json({message:"Finished"});
