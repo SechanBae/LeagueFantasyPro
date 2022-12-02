@@ -86,12 +86,11 @@ exports.joinLeague = async (req, res) => {
         type: QueryTypes.SELECT,
       }
     );
-    const checkCapacity=await sequelize.query(
-      "SELECT COUNT(*) as capacity FROM teams WHERE leagueId=?",
-      {replacements: [req.user.userId, req.body.leagueId],
-      type: QueryTypes.SELECT,
-      } 
-    )
+    const checkCapacity=await Team.count({
+      where:{
+        leagueId:req.body.leagueId
+      }
+    });
     const checkName=await Team.findOne({
       where:{
         teamName:req.body.teamName,
@@ -101,7 +100,7 @@ exports.joinLeague = async (req, res) => {
     if (alreadyJoined.length) {
       res.status(400).json({ message: "You are already in this league" });
     }
-    else if(checkCapacity[0].capacity==6){  
+    else if(checkCapacity==6){  
       res.status(400).json({ message: "This league has reached max capacity" });
     }
     else if(checkName){
