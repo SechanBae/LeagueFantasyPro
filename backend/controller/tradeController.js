@@ -7,6 +7,7 @@ const Team=db.teams;
 const Op = db.Sequelize.Op;
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
+const e = require("cors");
 
 exports.getTrades=async(req,res)=>{
     try {
@@ -128,86 +129,93 @@ exports.createTrade=async(req,res)=>{
 }
 exports.changeStatus=async(req,res)=>{
     try{
-        if(req.body.newStatus=="EXPIRED"){
-            const trade=await Trade.findByPk(req.body.tradeId);
-            trade.status=req.body.newStatus;
-            await trade.save();
+        const t=await Trade.findByPk(req.body.tradeId)
+        if(await t.status==="PENDING"){
+            if(req.body.newStatus=="EXPIRED"){
+                const trade=await Trade.findByPk(req.body.tradeId);
+                trade.status=req.body.newStatus;
+                await trade.save();
+            }
+            else if(req.body.newStatus=="DENIED"){
+                const trade=await Trade.findByPk(req.body.tradeId);
+                trade.status=req.body.newStatus;
+                await trade.save();
+            }
+            else if(req.body.newStatus=="ACCEPTED"){
+                const trade=await Trade.findByPk(req.body.tradeId);
+                const sender=await Team.findByPk(trade.sender);
+                const offeredPlayer=await Player.findByPk(trade.offeredPlayer);
+                var senderRole;
+                if(sender[offeredPlayer.position]==offeredPlayer.playerId){
+                    senderRole=offeredPlayer.position
+                }
+                else{
+                    senderRole="sub";
+                }
+                const receiver=await Team.findByPk(trade.receiver);
+                const wantedPlayer=await Player.findByPk(trade.wantedPlayer);
+                var receiverRole;
+                if(receiver[wantedPlayer.position]==wantedPlayer.playerId){
+                    receiverRole=wantedPlayer.position
+                }
+                else{
+                    receiverRole="sub";
+                }
+                sender[senderRole]=wantedPlayer.playerId;
+                receiver[receiverRole]=offeredPlayer.playerId;
+                await Trade.update({status:"EXPIRED"},
+                    {
+                        where:{
+                            [Op.and]:[
+                                {sender:sender.teamId},
+                                {offeredPlayer:offeredPlayer.playerId}
+                            ]
+                        }
+                    }
+                );
+                await Trade.update({status:"EXPIRED"},
+                    {
+                        where:{
+                            [Op.and]:[
+                                {receiver:sender.teamId},
+                                {wantedPlayer:offeredPlayer.playerId}
+                            ]
+                        }
+                    }
+                );
+                
+                await Trade.update({status:"EXPIRED"},
+                    {
+                        where:{
+                            [Op.and]:[
+                                {sender:receiver.teamId},
+                                {offeredPlayer:wantedPlayer.playerId}
+                            ]
+                        }
+                    }
+                );
+                await Trade.update({status:"EXPIRED"},
+                    {
+                        where:{
+                            [Op.and]:[
+                                {receiver:receiver.teamId},
+                                {wantedPlayer:wantedPlayer.playerId}
+                            ]
+                        }
+                    }
+                );
+                trade.status=req.body.newStatus;
+                await trade.save();
+                await sender.save();
+                await receiver.save();
+                
+            }
+            res.status(200).json({message:"Trade success"});
         }
-        else if(req.body.newStatus=="DENIED"){
-            const trade=await Trade.findByPk(req.body.tradeId);
-            trade.status=req.body.newStatus;
-            await trade.save();
+        else{
+            res.status(400).json({message:"Trade has been already altered"})
         }
-        else if(req.body.newStatus=="ACCEPTED"){
-            const trade=await Trade.findByPk(req.body.tradeId);
-            const sender=await Team.findByPk(trade.sender);
-            const offeredPlayer=await Player.findByPk(trade.offeredPlayer);
-            var senderRole;
-            if(sender[offeredPlayer.position]==offeredPlayer.playerId){
-                senderRole=offeredPlayer.position
-            }
-            else{
-                senderRole="sub";
-            }
-            const receiver=await Team.findByPk(trade.receiver);
-            const wantedPlayer=await Player.findByPk(trade.wantedPlayer);
-            var receiverRole;
-            if(receiver[wantedPlayer.position]==wantedPlayer.playerId){
-                receiverRole=wantedPlayer.position
-            }
-            else{
-                receiverRole="sub";
-            }
-            sender[senderRole]=wantedPlayer.playerId;
-            receiver[receiverRole]=offeredPlayer.playerId;
-            await Trade.update({status:"EXPIRED"},
-                {
-                    where:{
-                        [Op.and]:[
-                            {sender:sender.teamId},
-                            {offeredPlayer:offeredPlayer.playerId}
-                        ]
-                    }
-                }
-            );
-            await Trade.update({status:"EXPIRED"},
-                {
-                    where:{
-                        [Op.and]:[
-                            {receiver:sender.teamId},
-                            {wantedPlayer:offeredPlayer.playerId}
-                        ]
-                    }
-                }
-            );
-            
-            await Trade.update({status:"EXPIRED"},
-                {
-                    where:{
-                        [Op.and]:[
-                            {sender:receiver.teamId},
-                            {offeredPlayer:wantedPlayer.playerId}
-                        ]
-                    }
-                }
-            );
-            await Trade.update({status:"EXPIRED"},
-                {
-                    where:{
-                        [Op.and]:[
-                            {receiver:receiver.teamId},
-                            {wantedPlayer:wantedPlayer.playerId}
-                        ]
-                    }
-                }
-            );
-            trade.status=req.body.newStatus;
-            await trade.save();
-            await sender.save();
-            await receiver.save();
-            
-        }
-        res.status(200).json({message:"Trade success"});
+        
     }catch(error){
         console.log(error);
         res.status(400).json({message:error.message})
