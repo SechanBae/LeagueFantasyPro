@@ -19,25 +19,6 @@ exports.sendMessage=async(req,res)=>{
     }
 }
 
-exports.getSingleMessage=async(req,res)=>{
-    try {
-        const message=await Message.findOne({
-            where:{
-                leagueId:req.params.leagueId,
-                userId:req.params.userId
-            },
-            order:[['createdAt','DESC']],
-            include:{
-                model:User,
-                as:"users",
-                attributes:["username"]
-            }
-        })
-        res.status(200).json({message});
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
-}
 exports.getAllMessages=async(req,res)=>{
     try {
         const messages=await Message.findAll({
@@ -49,7 +30,7 @@ exports.getAllMessages=async(req,res)=>{
                 model:User,
                 as:"users",
                 attributes:["userId","username"]
-            }
+            },
         })
         res.status(200).json({messages});
     } catch (error) {

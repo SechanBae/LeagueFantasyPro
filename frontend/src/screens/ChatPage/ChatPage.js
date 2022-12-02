@@ -8,11 +8,11 @@ const ENDPOINT = "https://league-fantasy-pro.herokuapp.com/"; //change for deplo
 var socket;
 var config;
 var userId;
+var chosenChat;
 const ChatPage = () => {
   
   const [leagues,setLeagues]=useState(false);
   const [error,setError]=useState(false);
-  const [chosenChat,setChosenChat]=useState(false);
   const [filter,setFilter]=useState("");
   const [messageContent,setMessageContent]=useState("");
   const [messages,setMessages]=useState(false);
@@ -32,14 +32,18 @@ const ChatPage = () => {
         getLeagues();
         socket=io(ENDPOINT);
         socket.on("messageBroadcast",(leagueId)=>{
+          console.log(leagueId);
+          console.log(chosenChat);
           if(leagueId==chosenChat){
-            _setChosenChat(leagueId);
+            setChosenChat(leagueId);
           }
         })
       }
 },[])
-const _setChosenChat=async(leagueId)=>{
-  setChosenChat(leagueId);
+const setChosenChat=async(leagueId)=>{
+  console.log(leagueId);
+  chosenChat=leagueId;
+  console.log(chosenChat);
   try{
     const response=await axios.get("/api/messages/"+leagueId,config);
     setMessages(response.data.messages);
@@ -63,7 +67,7 @@ const submitMessage=async(content)=>{
     },config)
     if(response){
       socket.emit("messageSubmit",(chosenChat));
-      _setChosenChat(chosenChat);
+      setChosenChat(chosenChat);
     }
   } catch (error) {
     
@@ -94,7 +98,7 @@ const handleKeyUp=(e)=>{
           <div className='chatSelect'>
           {leagues?
             leagues.filter(league=>league.name.toLowerCase().includes(filter.toLocaleLowerCase())).map((league)=>(
-              <Card role="button" onClick={()=>_setChosenChat(league.leagueId)} key={league.leagueId} className='my-3 border border-white d-flex mx-auto' style={{width:"50vw"}}>
+              <Card role="button" onClick={()=>setChosenChat(league.leagueId)} key={league.leagueId} className='my-3 border border-white d-flex mx-auto' style={{width:"50vw"}}>
                   <Card.Body>
                     {league.name}
                   </Card.Body>
