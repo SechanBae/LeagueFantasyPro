@@ -158,6 +158,7 @@ const JoinLeaguePage = () => {
       onChange={(e)=>setFilter(e.target.value)}
       placeholder="Filter the leagues by league name"
       />
+      <div className='overflowx'>
       <Table className='text-center w-100' striped bordered hover>
         <thead>
           <tr>
@@ -188,6 +189,8 @@ const JoinLeaguePage = () => {
           }
         </tbody>
       </Table>
+      </div>
+      
     </div>
   )
 }
