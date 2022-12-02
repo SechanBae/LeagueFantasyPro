@@ -87,7 +87,7 @@ const TradePage = () => {
   };
   /**
    * make api call to create trade with user inputs
-   * @returns 
+   * @returns
    */
   const submitTrade = async () => {
     if (!wantPlayerChosen || !teamPlayerChosen) {
@@ -125,31 +125,31 @@ const TradePage = () => {
   };
   /**
    * make api call to change trade status to response of user
-   * @param {*} tradeId 
-   * @param {*} newStatus 
+   * @param {*} tradeId
+   * @param {*} newStatus
    */
-  const changeTradeStatus=async(tradeId,newStatus)=>{
-    try{
-        const response=await axios.put(
-            "/api/trades/changeStatus",
+  const changeTradeStatus = async (tradeId, newStatus) => {
+    try {
+      const response = await axios.put(
+        "/api/trades/changeStatus",
         {
-            newStatus:newStatus,
-            tradeId:tradeId
+          newStatus: newStatus,
+          tradeId: tradeId,
         },
         config
-        )
-        getTrades();
-        setConfirm("Trade Offer Has Been Changed");
-        setError(false);
-    }catch(error){
+      );
+      getTrades();
+      setConfirm("Trade Offer Has Been Changed");
+      setError(false);
+    } catch (error) {
       setError(error.reponse.data.message);
       setConfirm(false);
     }
-  }
+  };
   /**
-    * When component is mounted, redirect user if they are not logged in and set config headers for verify login,
-    * and call methods to get data needed
-    */
+   * When component is mounted, redirect user if they are not logged in and set config headers for verify login,
+   * and call methods to get data needed
+   */
   useEffect(() => {
     const userInfo = sessionStorage.getItem("userInfo");
     if (!userInfo) {
@@ -171,7 +171,9 @@ const TradePage = () => {
     <div className="container">
       {confirm && <Message variant="info">{confirm}</Message>}
       {error && <Message variant="danger">{error}</Message>}
-      <Button onClick={()=>navigate('/team/'+teamId)}>Back To Team Page</Button>
+      <Button onClick={() => navigate("/team/" + teamId)}>
+        Back To Team Page
+      </Button>
       <h2>Trades</h2>
       <Button
         onClick={() => setToggleCreate(!toggleCreate)}

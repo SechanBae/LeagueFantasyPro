@@ -78,25 +78,4 @@ db.teamPerformances.belongsTo(db.teams,{
   as:"teams"
 })
 
-/**
- * Creates admin user if it doesn't exist
- */
-const adminData={
-  username:"Admin",
-  password:"$2a$10$GcLCquYT3uW86bodXAH2euB2Ox.GmAIlbU/SWNfh94aNkQC2gYv4C",
-  isAdmin:true
-}
-const admin = db.users
-  .findOne({
-    where: {
-      username: "Admin",
-      isAdmin: true,
-    },
-  })
-  .then((a) => {
-    if(!a){
-      db.users.create(adminData);
-    }
-  });
-
 module.exports = db;

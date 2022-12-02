@@ -301,6 +301,7 @@ exports.finishDraft=async(req,res)=>{
     const league=await League.findByPk(req.body.leagueId);
     league.draftStatus="FINISHED";
     await league.save();
+    res.status(200).json({message:"success"});
   }catch(error){
     res.status(400).json({message:error.message});
   }
