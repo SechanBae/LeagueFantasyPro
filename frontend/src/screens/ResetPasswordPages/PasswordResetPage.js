@@ -1,3 +1,6 @@
+/**
+ * Renders component for password reset page
+ */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
@@ -10,6 +13,10 @@ const PasswordResetPage = () => {
     const [password,setPassword]=useState("");
     const [passwordConfirm,setPasswordConfirm]=useState("");
     const {token}=useParams();
+    /**
+     * makes api call to reset password
+     * @param {*} e 
+     */
     const submitHandler=async(e)=>{
         e.preventDefault();
         try{

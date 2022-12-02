@@ -1,3 +1,6 @@
+/**
+ * Renders component for draft page
+ */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -31,6 +34,9 @@ const DraftPage = () => {
     .filter((player) => !chosenPlayersFilter.includes(player.playerId))
     .slice(firstPostIndex, lastPostIndex);
   const currentPick = pickOrder.find((pick) => pick.players == null);
+  /**
+   * make api calls to get list of players
+   */
   const getPlayers = async () => {
     try {
       const playerResponse = await axios.get(
@@ -42,6 +48,9 @@ const DraftPage = () => {
       setError(error.response.data.message);
     }
   };
+  /**
+   * make api call to get list of draft picks
+   */
   const getPickOrder = async () => {
     try {
       const orderResponse = await axios.get(
@@ -60,6 +69,10 @@ const DraftPage = () => {
       setError(error.response.data.message);
     }
   };
+  /**
+   * When component is mounted, redirect user if they are not logged in and set config headers for verify login,
+   * start websocket and calls methods to get players and pickorder
+   */
   useEffect(() => {
     const userInfo = sessionStorage.getItem("userInfo");
     if (!userInfo) {
@@ -82,6 +95,9 @@ const DraftPage = () => {
       });
     }
   }, []);
+  /**
+   * Once the last user of the draft has picked, make api call to finish draft
+   */
   const finishDraft = async () => {
     try {
       const response = await axios.put(
@@ -95,6 +111,9 @@ const DraftPage = () => {
       setError(error.response.data.message);
     }
   };
+  /**
+   * make api call to draft player user has chosen
+   */
   const draftPlayer = async () => {
     if (playerChosen) {
       try {

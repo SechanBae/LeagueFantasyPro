@@ -1,3 +1,6 @@
+/**
+ * Renders screen component for add players page
+ */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
@@ -11,6 +14,11 @@ const AddPlayers = () => {
   const [error,setError]=useState(false);
   const [confirm,setConfirm]=useState(false);
   const navigate=useNavigate();
+  const { CSVReader } = useCSVReader();
+  /**
+   * Makes api call to add players based off csv file
+   * @returns 
+   */
   const addPlayers=async()=>{
     setPlayers(players.pop());
     let playersJSON=[];
@@ -44,7 +52,9 @@ const AddPlayers = () => {
         setError(error.response.data.message);
     }
   }
-  const { CSVReader } = useCSVReader();
+  /**
+   * When component is mounted, redirect user if they are not logged in and set config headers for verify login
+   */
   useEffect(()=>{
     const userInfo=sessionStorage.getItem("userInfo");
     if(!userInfo){

@@ -1,3 +1,9 @@
+/**
+ * Model representing teamperformance object
+ * @param {*} sequelize 
+ * @param {*} Sequelize 
+ * @returns 
+ */
 module.exports = (sequelize, Sequelize) => {
     const TeamPerformance = sequelize.define("teamPerformance", {
       teamPerformanceId: {

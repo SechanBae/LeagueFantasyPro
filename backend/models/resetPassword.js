@@ -1,3 +1,9 @@
+/**
+ * Model representing resetpassword object
+ * @param {*} sequelize 
+ * @param {*} Sequelize 
+ * @returns 
+ */
 module.exports = (sequelize, Sequelize) => {
   const ResetPassword = sequelize.define("resetPassword", {
     resetPasswordId: {

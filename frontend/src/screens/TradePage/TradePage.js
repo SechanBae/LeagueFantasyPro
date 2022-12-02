@@ -1,3 +1,6 @@
+/**
+ * Renders component for trade page
+ */
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Button, Card, Form, Tab, Table } from "react-bootstrap";
@@ -35,8 +38,10 @@ const TradePage = () => {
       )
       .slice(firstPostIndex, lastPostIndex);
   }
-
   const navigate = useNavigate();
+  /**
+   * make api call to get trades
+   */
   const getTrades = async () => {
     try {
       const response = await axios.get(
@@ -50,6 +55,9 @@ const TradePage = () => {
       setConfirm(false);
     }
   };
+  /**
+   * make api call to get available players
+   */
   const getAvailablePlayers = async () => {
     try {
       const response = await axios.get(
@@ -62,6 +70,9 @@ const TradePage = () => {
       setConfirm(false);
     }
   };
+  /**
+   * make api call to get own team's players
+   */
   const getTeamPlayers = async () => {
     try {
       const response = await axios.get("/api/teams/getTeam/" + teamId, config);
@@ -74,6 +85,10 @@ const TradePage = () => {
       setConfirm(false);
     }
   };
+  /**
+   * make api call to create trade with user inputs
+   * @returns 
+   */
   const submitTrade = async () => {
     if (!wantPlayerChosen || !teamPlayerChosen) {
       setConfirm(false);
@@ -108,6 +123,11 @@ const TradePage = () => {
       setConfirm(false);
     }
   };
+  /**
+   * make api call to change trade status to response of user
+   * @param {*} tradeId 
+   * @param {*} newStatus 
+   */
   const changeTradeStatus=async(tradeId,newStatus)=>{
     try{
         const response=await axios.put(
@@ -126,6 +146,10 @@ const TradePage = () => {
       setConfirm(false);
     }
   }
+  /**
+    * When component is mounted, redirect user if they are not logged in and set config headers for verify login,
+    * and call methods to get data needed
+    */
   useEffect(() => {
     const userInfo = sessionStorage.getItem("userInfo");
     if (!userInfo) {

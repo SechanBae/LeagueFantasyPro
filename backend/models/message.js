@@ -1,3 +1,9 @@
+/**
+ * Model representing message object
+ * @param {*} sequelize 
+ * @param {*} Sequelize 
+ * @returns 
+ */
 module.exports = (sequelize, Sequelize) => {
     const Message = sequelize.define("message", {
       messageId: {

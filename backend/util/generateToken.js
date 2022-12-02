@@ -1,3 +1,6 @@
+/**
+ * Generate token for user session
+ */
 const jwt=require("jsonwebtoken");
 require("dotenv").config();
 const generateToken=(id)=>{

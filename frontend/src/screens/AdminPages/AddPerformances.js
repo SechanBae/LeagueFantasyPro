@@ -1,3 +1,6 @@
+/**
+ * Renders screen component for add performances page
+ */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button } from 'react-bootstrap';
@@ -13,6 +16,12 @@ const AddPerformances = () => {
   const [week,setWeek]=useState(0);
   const [sure,setSure]=useState(false);
   const navigate=useNavigate();
+
+  const { CSVReader } = useCSVReader();
+  /**
+   * makes api call to create performances based off csv data, and week number
+   * @returns 
+   */
   const addPerformances=async()=>{
     if(performances[0][1]!=="totalKills"&&performances[0][2]!=="totalDeaths"&&performances[0][3]!=="totalAssists"&&performances[0][4]!=="totalCS"){
         console.log("HELLO");
@@ -54,6 +63,9 @@ const AddPerformances = () => {
     }
     
   }
+  /**
+   * Makes api call to finish season
+   */
   const finishHandler=async()=>{
     try {
         const response=await axios.put("/api/performances/finishSeason",{},config);
@@ -66,7 +78,9 @@ const AddPerformances = () => {
         setError(error.response.data.message);
     }
   }
-  const { CSVReader } = useCSVReader();
+  /**
+   * When component is mounted, redirect user if they are not logged in and set config headers for verify login
+   */
   useEffect(()=>{
     const userInfo=sessionStorage.getItem("userInfo");
     if(!userInfo){

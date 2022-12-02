@@ -1,8 +1,17 @@
+/**
+ * Controller responsible for making queries to Team model
+ */
 const db=require("../models");
 const Team=db.teams;
 const Player=db.players;
 const League=db.leagues;
 const Op = db.Sequelize.Op;
+/**Deletes the team  associated with a league,
+ * checks that conditions are okay first.
+ * Deletes the league as well if the host of the league leaves
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.leaveLeague=async(req,res)=>{
     try{
         console.log("hello");
@@ -37,6 +46,11 @@ exports.leaveLeague=async(req,res)=>{
         res.status(400).json({message:"Failed"});
     }
 }
+/**
+ * Get team data as well as the player data on the team
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getTeam=async(req,res)=>{
     try{
         const team=await Team.findByPk(req.params.teamId);
@@ -76,6 +90,11 @@ exports.getTeam=async(req,res)=>{
         res.status(400).json({message:"Failed"});
     }
 }
+/**update team so that the subsitute is made
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.subPlayer=async(req,res)=>{
     try{
         const team=await Team.findByPk(req.body.teamId);

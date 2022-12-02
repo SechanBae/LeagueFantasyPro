@@ -1,8 +1,17 @@
+/**
+ * Middleware that verifies that the user session token is real
+ */
 const jwt =require("jsonwebtoken");
 require("dotenv").config();
 const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
+/**
+ * Verify the user session token
+ * @param {request data} req 
+ * @param {response data} res
+ * @param {next function} next 
+ */
 const checkLogin=async function(req,res,next){
     let token;
     if(req.headers.authorization&&req.headers.authorization.startsWith("Bearer")){

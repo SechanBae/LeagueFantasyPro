@@ -1,3 +1,6 @@
+/**
+ * Controller file responsible for querying messages model
+ */
 const db = require("../models");
 const Message=db.messages;
 const League = db.leagues;
@@ -5,6 +8,11 @@ const User = db.users;
 const Op = db.Sequelize.Op;
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
+/** Create message based off user's content and leagueId
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.sendMessage=async(req,res)=>{
     try{
         const messageData={
@@ -18,7 +26,11 @@ exports.sendMessage=async(req,res)=>{
         res.status(400).json({ message: error.message });
     }
 }
-
+/** Retrieve all messages in the requested leagueId
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getAllMessages=async(req,res)=>{
     try {
         const messages=await Message.findAll({

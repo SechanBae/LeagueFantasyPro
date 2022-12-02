@@ -1,3 +1,6 @@
+/**
+ * Renders component for a 404 page
+ */
 import React from 'react'
 
 const NotFoundPage = () => {

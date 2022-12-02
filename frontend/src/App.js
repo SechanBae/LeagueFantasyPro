@@ -1,3 +1,6 @@
+/**
+ * Renders the app, set up routes on frontend to match screens
+ */
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 import LandingPage from './screens/LandingPage/LandingPage';

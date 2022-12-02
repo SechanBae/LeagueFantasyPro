@@ -1,8 +1,15 @@
+/**
+ * Renders a table of players to display their statistics, can be sorted
+ */
 import React, { useState } from 'react'
 import { Table } from 'react-bootstrap';
 import {isEqual} from 'lodash';
 const PlayerTable = ({setPlayerChosen,currentPlayers,setPlayers,players,playerChosen}) => {
     const [orderDirection,setOrderDirection]=useState("ASC");
+    /**
+     * Sort string column
+     * @param {sort column} col 
+     */
     const sortingString=(col)=>{
         if(orderDirection==="ASC"){
             const sorted=[...players].sort((a,b)=>
@@ -19,6 +26,10 @@ const PlayerTable = ({setPlayerChosen,currentPlayers,setPlayers,players,playerCh
             setOrderDirection("ASC")
           }
     }
+    /**
+     * sort number column
+     * @param {sort column} col 
+     */
     const sortingNumber=(col)=>{
         if(orderDirection==="ASC"){
             const sorted=[...players].sort((a,b)=>

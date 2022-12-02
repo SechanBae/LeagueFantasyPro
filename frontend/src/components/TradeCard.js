@@ -1,3 +1,6 @@
+/**
+ * Renders a component that shows trade data
+ */
 import { isEqual } from "lodash";
 import React from "react";
 import { Button, Card, Table } from "react-bootstrap";

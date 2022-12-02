@@ -1,3 +1,6 @@
+/**
+ * Controller file responsible for querying league model
+ */
 const db = require("../models");
 const User = db.users;
 const League = db.leagues;
@@ -8,6 +11,12 @@ const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
 const bcrypt=require("bcrypt");
 const e = require("express");
+
+/**
+ * get leagues the user has a team with
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getLeagues = async (req, res) => {
   console.log(req.user);
   try {
@@ -24,6 +33,13 @@ exports.getLeagues = async (req, res) => {
   }
 };
 
+/**
+ * Create a league with the entered data from user,
+ * hash password if there is one.
+ * create the team at the same time as well
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.createLeague = async (req, res) => {
   if(!req.body.password){
     const leagueData = {
@@ -77,6 +93,13 @@ exports.createLeague = async (req, res) => {
   }
 
 };
+/** If the league needs password,
+ * check password entered, create team associated with league
+ * 
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.joinLeague = async (req, res) => {
   try {
     const alreadyJoined = await sequelize.query(
@@ -149,6 +172,11 @@ exports.joinLeague = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+/**
+ * Get leagues to join where a user has not joined yet
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getLeaguesForJoin= async (req,res)=>{
     try{
         const leagues = await sequelize.query(
@@ -165,6 +193,12 @@ exports.getLeaguesForJoin= async (req,res)=>{
         res.status(400).json({ message: error.message });
     }
 }
+/** Get league's information
+ * and teams associated with that league
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getLeagueInfo=async(req,res)=>{
   try{
     const league=await League.findByPk(req.params.leagueId);
@@ -193,6 +227,12 @@ exports.getLeagueInfo=async(req,res)=>{
     res.status(400).json({ message: error.message });
   }
 }
+/** update draftstatus to ongoing, create random order of teams
+ * and create draft picks in that order
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.startDraft=async(req,res)=>{
   try{
     const teams=await Team.count({
@@ -251,6 +291,11 @@ exports.startDraft=async(req,res)=>{
     res.status(400).json({ message: error.message });
   }
 }
+/** Update draft status to finish
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.finishDraft=async(req,res)=>{
   try{
     const league=await League.findByPk(req.body.leagueId);

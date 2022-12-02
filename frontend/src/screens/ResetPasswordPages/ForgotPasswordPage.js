@@ -1,3 +1,6 @@
+/**
+ * Renders component for forgotten password page
+ */
 import axios from 'axios';
 import React, { useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
@@ -7,6 +10,10 @@ const ForgotPasswordPage = () => {
     const [email,setEmail]=useState("");
     const [confirm,setConfirm]=useState(false);
     const [error,setError]=useState(false);
+    /**
+     * make api call to password recovery
+     * @param {*} e 
+     */
     const submitHandler=async (e)=>{
         e.preventDefault();
         try{

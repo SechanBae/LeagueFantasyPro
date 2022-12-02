@@ -1,3 +1,6 @@
+/**
+ * Main file for backend, starts port,routing,database, and websocket
+ */
 const express = require("express");
 const cors=require("cors");
 const db=require("./models");

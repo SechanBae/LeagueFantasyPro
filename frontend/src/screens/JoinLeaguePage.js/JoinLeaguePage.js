@@ -1,3 +1,6 @@
+/*
+ * Renders component for join league page
+*/ 
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Table } from 'react-bootstrap';
@@ -13,6 +16,10 @@ const JoinLeaguePage = () => {
   const [password,setPassword]=useState("");
   const [join,setJoin]=useState("");
   const navigate=useNavigate(""); 
+  /**
+   * When component is mounted, redirect user if they are not logged in and set config headers for verify login,
+   * make api call to get list of leagues to join
+   */
   useEffect(()=>{
     async function getData(){
       try{
@@ -38,6 +45,10 @@ const JoinLeaguePage = () => {
     }
     getData();
   },[])
+  /**
+   * sort table by column
+   * @param {*} col 
+   */
   const sorting=(col)=>{
     if(orderDirection==="ASC"){
       const sorted=[...leagues].sort((a,b)=>
@@ -54,6 +65,10 @@ const JoinLeaguePage = () => {
       setOrderDirection("ASC")
     }
   }
+  /**
+   * sort table by column (public/private)
+   * @param {*} col 
+   */
   const sortingPublic=()=>{
     if(orderDirection==="ASC"){
       const sorted=[...leagues].sort((a,b)=>
@@ -71,6 +86,9 @@ const JoinLeaguePage = () => {
       setOrderDirection("ASC")
     }
   }
+  /**
+   * sort by capacity of leagues
+   */
   const sortingCapacity=()=>{
     if(orderDirection==="ASC"){
       const sorted=[...leagues].sort((a,b)=>
@@ -88,11 +106,18 @@ const JoinLeaguePage = () => {
       setOrderDirection("ASC")
     }
   }
+  /**
+   * Cancel join process
+   */
   const cancelJoin=()=>{
     setTeamName("");
     setPassword("");
     setJoin("");
   }
+  /**
+   * make api to join league with user inputs
+   * @param {*} e 
+   */
   const submitHandler= async (e)=>{
     e.preventDefault();
     try{

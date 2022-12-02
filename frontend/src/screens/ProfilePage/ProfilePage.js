@@ -1,3 +1,6 @@
+/**
+ * Renders component for profile page
+ */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap';
@@ -14,6 +17,10 @@ const ProfilePage = () => {
     const [changeField,setChangeField]=useState("");
     const [oldPassword,setOldPassword]=useState("");
     const navigate=useNavigate();
+    /**
+    * When component is mounted, redirect user if they are not logged in and set config headers for verify login,
+    * make api call to get profile
+    */
     useEffect(()=>{
         const userInfo=sessionStorage.getItem("userInfo");
         if(!userInfo){
@@ -36,6 +43,10 @@ const ProfilePage = () => {
         }
         getProfile()
     },[])
+    /**
+     * make api call to either change email or password
+     * @param {*} e 
+     */
     const submitHandler =async(e)=>{
         
         e.preventDefault();

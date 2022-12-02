@@ -1,3 +1,9 @@
+/**
+ * Model representing trade object
+ * @param {*} sequelize 
+ * @param {*} Sequelize 
+ * @returns 
+ */
 module.exports = (sequelize, Sequelize) => {
     const Trade = sequelize.define("trade", {
       tradeId: {

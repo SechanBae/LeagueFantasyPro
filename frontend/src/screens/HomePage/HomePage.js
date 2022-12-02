@@ -1,3 +1,6 @@
+/***
+ * Renders component for home page
+ */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Card } from 'react-bootstrap';
@@ -9,6 +12,9 @@ const HomePage = () => {
     const [leagues,setLeagues]=useState(false);
     const [error,setError]=useState(false);
     const navigate=useNavigate(); 
+    /**
+    * When component is mounted, redirect user if they are not logged in and set config headers for verify login
+    */
     useEffect(()=>{
         const userInfo=sessionStorage.getItem("userInfo");
         if(!userInfo){

@@ -1,3 +1,6 @@
+/**
+ * renders component for league page
+ */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Accordion, Badge, Button, Card } from 'react-bootstrap';
@@ -18,6 +21,10 @@ const LeaguePage = () => {
     const [detailedPerformances, setDetailedPerformances] = useState(false);
     const [selectedTeam,setSelectedTeam]=useState(false);
     const navigate=useNavigate();
+    /**
+    * When component is mounted, redirect user if they are not logged in and set config headers for verify login,
+    * make api call to get league info the user is in
+    */
     useEffect(()=>{
       const userInfo=sessionStorage.getItem("userInfo");
       if(!userInfo){
@@ -45,6 +52,10 @@ const LeaguePage = () => {
       
       getLeague();
     },[])
+    /**
+     * make api call to get matches of a team
+     * @param {*} teamId 
+     */
     const getMatchHistory=async(teamId)=>{
       try {
         const response=await axios.get("/api/performances/getPerformances/"+teamId,config);
@@ -53,6 +64,14 @@ const LeaguePage = () => {
         setError(error.response.data.message);
       }
     }
+    /**
+     * make api call to get detailed player performances of a match
+     * @param {*} top 
+     * @param {*} jg 
+     * @param {*} mid 
+     * @param {*} adc 
+     * @param {*} sup 
+     */
     const getDetailedMatchHistory=async(top,jg,mid,adc,sup)=>{
       try {
         const response=await axios.post("/api/performances/getDetailedPerformances/",{
@@ -63,6 +82,9 @@ const LeaguePage = () => {
         setError(error.response.data.message);
       }
     }
+    /**
+     * make api call to start the draft
+     */
     const startDraftHandler=async()=>{
       try{
         const response=await axios.put("/api/leagues/startDraft/",{
@@ -73,6 +95,9 @@ const LeaguePage = () => {
         setError(error.response.data.message);
       }
     }
+    /**
+     * make api call to leave the league
+     */
     const leaveHandler=async()=>{
       try{
         const response=await axios.delete("/api/teams/leaveLeague/"+leagueId,config);

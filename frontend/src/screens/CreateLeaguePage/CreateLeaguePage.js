@@ -1,3 +1,6 @@
+/**
+ * Renders component for create league page
+ */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Form, Spinner } from 'react-bootstrap'
@@ -14,6 +17,9 @@ const CreateLeaguePage = () => {
   const [privateLeague,setPrivateLeague]=useState(false);
   const [loading,setLoading]=useState(false);
   const navigate=useNavigate();
+  /**
+   * When component is mounted, redirect user if they are not logged in and set config headers for verify login
+   */
   useEffect(()=>{
     const userInfo=sessionStorage.getItem("userInfo");
     if(!userInfo){
@@ -26,7 +32,11 @@ const CreateLeaguePage = () => {
         },
     }
     }
-  })
+  },[])
+  /**
+   * make api call to create league based off user inputs
+   * @param {*} e 
+   */
   const submitHandler=async (e)=>{
     e.preventDefault();
     

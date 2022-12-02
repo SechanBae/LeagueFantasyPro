@@ -1,3 +1,6 @@
+/**
+ * Routing api calls to player controller functions
+ */
 const express=require("express");
 const checkLogin=require("../middleware/authenticateMiddleware.js");
 module.exports = app => {

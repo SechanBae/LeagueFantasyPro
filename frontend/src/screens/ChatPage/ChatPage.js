@@ -1,3 +1,6 @@
+/**
+ * Renders component for chat page
+ */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Card, CloseButton, Form } from 'react-bootstrap';
@@ -17,6 +20,10 @@ const ChatPage = () => {
   const [messageContent,setMessageContent]=useState("");
   const [messages,setMessages]=useState(false);
   const navigate=useNavigate(); ;
+  /**
+   * When component is mounted, redirect user if they are not logged in and set config headers for verify login
+   * set up websocket as well as getting the leagues(chatroom) of the user
+   */
   useEffect(()=>{
     const userInfo=sessionStorage.getItem("userInfo");
     if(!userInfo){
@@ -40,6 +47,10 @@ const ChatPage = () => {
         })
       }
 },[])
+/**
+ * Set chat room to selected league and make api call to get messages for that league
+ * @param {*} leagueId 
+ */
 const setChosenChat=async(leagueId)=>{
   console.log(leagueId);
   chosenChat=leagueId;
@@ -51,6 +62,9 @@ const setChosenChat=async(leagueId)=>{
     setError(error.response.data.message);
   }
 }
+/**
+ * Get leagues (chatrooms) for a user
+ */
 const getLeagues=async()=>{
   try {
     const response=await axios.get('/api/leagues/',config);
@@ -59,6 +73,10 @@ const getLeagues=async()=>{
     setError(error.response.data.message);
   }
 }
+/**
+ * Makes api call to send message, sends socket info that message has been sent
+ * @param {*} content 
+ */
 const submitMessage=async(content)=>{
   try {
     const response=await axios.post("/api/messages/sendMessage",{
@@ -73,6 +91,10 @@ const submitMessage=async(content)=>{
     
   }
 }
+/**
+ * When user presses enter to submit message
+ * @param {event} e 
+ */
 const handleKeyUp=(e)=>{
   if(e.keyCode===13){
     submitMessage(e.target.value);

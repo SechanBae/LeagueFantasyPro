@@ -1,4 +1,6 @@
-import e from 'cors';
+/**
+ * renders component for login page
+ */
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
 import axios from "axios";
@@ -11,13 +13,21 @@ const LoginPage = () => {
     const [error,setError]=useState(false);
     const [loading,setLoading]=useState(false);
     const navigate=useNavigate(); 
+    /**
+    * When component is mounted, redirect user if they are logged in 
+    * 
+    */
     useEffect(()=>{
         const userInfo=sessionStorage.getItem("userInfo");
         if(userInfo){
             navigate("/");
         }
-    })
+    },[])
 
+    /**
+     * makes api call to log user in with data entered
+     * @param {*} e 
+     */
     const submitHandler=async (e)=>{
         e.preventDefault();
         try {

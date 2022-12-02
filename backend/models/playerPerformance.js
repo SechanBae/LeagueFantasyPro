@@ -1,3 +1,9 @@
+/**
+ * Model representing playerPerformance object
+ * @param {*} sequelize 
+ * @param {*} Sequelize 
+ * @returns 
+ */
 module.exports = (sequelize, Sequelize) => {
     const PlayerPerformance = sequelize.define("playerPerformance", {
       performanceId: {

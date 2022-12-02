@@ -1,3 +1,6 @@
+/**
+ * renders loading component
+ */
 import React from 'react'
 
 const Spinner = () => {

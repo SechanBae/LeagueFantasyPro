@@ -1,3 +1,9 @@
+/**
+ * model rerepsenting draftpick
+ * @param {*} sequelize 
+ * @param {*} Sequelize 
+ * @returns 
+ */
 module.exports = (sequelize, Sequelize) => {
     const Draft = sequelize.define("draft", {
       draftId: {

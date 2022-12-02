@@ -1,4 +1,7 @@
 require("dotenv").config();
+/**
+ * Responsible for making connection to database through .ENV file
+ */
 module.exports={
     HOST: process.env.HOST,
     USER: process.env.USER,

@@ -1,9 +1,11 @@
+/**
+ * Component that renders list of given leagues
+ * in a horizontal format
+ */
 import React, { useEffect } from 'react'
 import { Button, Card } from 'react-bootstrap'
 
 const LeagueList = ({leagues}) => {
-    useEffect(() => {
-    }, [])
     
   return (
     <div className='d-flex flex-row overflowx'>

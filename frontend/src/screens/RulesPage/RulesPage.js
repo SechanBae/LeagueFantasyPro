@@ -1,3 +1,6 @@
+/**
+ * Renders component for rules page
+ */
 import React from 'react'
 import { Accordion } from 'react-bootstrap'
 

@@ -1,3 +1,6 @@
+/**
+ * Send email for password recovery
+ */
 const nodemailer=require("nodemailer");
 const Transport = require("nodemailer-sendinblue-transport");
 require("dotenv").config();
@@ -9,7 +12,7 @@ exports.sendEmail=async(token,email)=>{
         from: '"LeagueFantasyPasswordRecovery" <leaguefantasypassrecovery@example.com>', 
         to: email,
         subject: "Password Reset Request",
-        html: "<p>You have requested a password reset<a href='localhost:3000/passwordReset/"+token+"'> click here</a></p>",
+        html: "<p>You have requested a password reset<a href='https://league-fantasy-pro.herokuapp.com/passwordReset/"+token+"'> click here</a></p>",
       });
     return info;
 }

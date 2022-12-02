@@ -1,3 +1,6 @@
+/**
+ * Creates database tables based off models
+ */
 const dbConfig = require("../config/db.config");
 
 const Sequelize = require("sequelize");
@@ -29,6 +32,11 @@ db.messages=require("./message")(sequelize,Sequelize);
 db.resetPasswords=require("./resetPassword")(sequelize,Sequelize);
 db.drafts=require("./draft")(sequelize,Sequelize);
 db.teamPerformances=require('./teamPerformance')(sequelize,Sequelize);
+
+
+/**
+ * Creating relationships between models
+ */
 db.teams.belongsTo(db.leagues,{
   foreignKey:"leagueId",
   as:"leagues"
@@ -69,6 +77,10 @@ db.teamPerformances.belongsTo(db.teams,{
   foreignKey:"teamId",
   as:"teams"
 })
+
+/**
+ * Creates admin user if it doesn't exist
+ */
 const adminData={
   username:"Admin",
   password:"$2a$10$GcLCquYT3uW86bodXAH2euB2Ox.GmAIlbU/SWNfh94aNkQC2gYv4C",

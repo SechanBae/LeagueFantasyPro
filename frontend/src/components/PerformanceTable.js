@@ -1,3 +1,6 @@
+/**
+ * Renders table of performances for a given list of performances
+ */
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 

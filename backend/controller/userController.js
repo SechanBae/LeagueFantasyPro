@@ -1,3 +1,6 @@
+/**
+ * Controller file for querying to user related
+ */
 const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
@@ -5,6 +8,12 @@ const bcrypt=require("bcrypt");
 const ResetPassword=db.resetPasswords;
 const sendEmail=require("../util/sendEmail");
 const generateToken = require("../util/generateToken");
+/**
+ * Create user based on register data,
+ * hash password
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.create = async (req, res) => { 
     const isAvailable=await User.count({
         where:{
@@ -40,6 +49,12 @@ exports.create = async (req, res) => {
   
 };
 
+/**
+ * Log user in if credentials are correct,
+ * send JWT token for session verification
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.findOneLogin = async (req, res) => {
   const username=req.body.username;
   const password=req.body.password;
@@ -61,7 +76,11 @@ exports.findOneLogin = async (req, res) => {
     res.status(401).json({message:"Incorrect Credentials"});
   }
 };
-
+/**get user data
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getProfile=async (req,res)=>{
     User.findByPk(req.user.userId)
     .then((user)=>{
@@ -71,6 +90,11 @@ exports.getProfile=async (req,res)=>{
         res.status(404).json({ message: error.message })
     })
 }
+/**update email for user
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.changeEmail=async(req,res)=>{
     try {
         const emailTaken=await User.findOne({
@@ -90,6 +114,11 @@ exports.changeEmail=async(req,res)=>{
         res.status(404).json({ message: error.message })
     }
 }
+/**
+ * update password
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.changePassword=async(req,res)=>{
     const salt=await bcrypt.genSalt(10);
     User.findOne({
@@ -113,6 +142,12 @@ exports.changePassword=async(req,res)=>{
         res.status(404).json({ message: error.message })
     })
 }
+/**
+ * create random token for a user that forgets their password,
+ * and send email to link to that token
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.forgotPasswordSendEmail=async(req,res)=>{
     try{
         const user=await User.findOne({
@@ -135,6 +170,11 @@ exports.forgotPasswordSendEmail=async(req,res)=>{
     }
 }
 
+/**
+ * update password, delete token
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.resetPassword=async(req,res)=>{
     try{
         const reset=await ResetPassword.findOne({

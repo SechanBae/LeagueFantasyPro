@@ -1,3 +1,6 @@
+/**
+ * Renders component for team page
+ */
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import { useNavigate, useParams } from 'react-router-dom';
@@ -15,6 +18,9 @@ const TeamPage = () => {
     const [selectedIndex,setSelectedIndex]=useState(-1);
     const positions=["Top","Jungle","Middle","ADC","SUPPORT","SUB"];
     const navigate=useNavigate();
+    /**
+     * make api call to get team data
+     */
     const getTeam=async()=>{
         try{
             const response=await axios.get("/api/teams/getTeam/"+teamId,config);
@@ -26,6 +32,11 @@ const TeamPage = () => {
             setError(error.reponse.data.message);
         }
     }
+    /**
+     * Make api call to get performance of a specific player in a team
+     * @param {*} playerId 
+     * @param {*} index 
+     */
     const getPerformance=async(playerId,index)=>{
         try{
             const response=await axios.get("/api/performances/getPlayerPerformance/"+playerId+"/"+teamId,config);
@@ -37,6 +48,9 @@ const TeamPage = () => {
             setError(error.reponse.data.message);
         }
     }
+    /**
+     * Make api call to substitute player
+     */
     const substitutePlayer=async()=>{
         if(players[5]){
             try{
@@ -60,6 +74,10 @@ const TeamPage = () => {
         }
         
     }
+    /**
+    * When component is mounted, redirect user if they are not logged in and set config headers for verify login,
+    * and call getTeam method
+    */
     useEffect(() => {
         const userInfo=sessionStorage.getItem("userInfo");
         if(!userInfo){

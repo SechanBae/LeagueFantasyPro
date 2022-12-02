@@ -1,3 +1,7 @@
+/**
+ * Component that renders message for user
+ * (the alerts on top for success or errors)
+ */
 import React from 'react'
 import { Alert } from 'react-bootstrap';
 

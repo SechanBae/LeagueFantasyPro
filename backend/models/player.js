@@ -1,3 +1,9 @@
+/**
+ * Model representing player object
+ * @param {*} sequelize 
+ * @param {*} Sequelize 
+ * @returns 
+ */
 module.exports = (sequelize, Sequelize) => {
     const Player = sequelize.define("player", {
       playerId: {

@@ -1,3 +1,6 @@
+/**
+ * A controller file that is responsible for making queries to the draft model
+ */
 const db = require("../models");
 const Team=db.teams;
 const Player=db.players;
@@ -6,6 +9,11 @@ const Draft=db.drafts;
 const { QueryTypes } = require('sequelize');
 const { sequelize } = require("../models");
 
+/**Get order of draft
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getDraftOrder=async(req,res)=>{
     try{
         const pickOrder=await Draft.findAll({
@@ -31,6 +39,11 @@ exports.getDraftOrder=async(req,res)=>{
     }
 }
 
+/** Add player to user's team
+ *  Update draft order
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.addPlayerToTeam=async(req,res)=>{
     try{
         const team=await Team.findOne({

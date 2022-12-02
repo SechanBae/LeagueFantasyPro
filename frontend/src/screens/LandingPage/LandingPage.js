@@ -1,9 +1,16 @@
+/**
+ * Renders component for landing page
+ */
 import React, { useEffect } from 'react'
 import {Button, Container,Row} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 const LandingPage = () => {
     
     const navigate=useNavigate(); 
+    /**
+    * When component is mounted, redirect user if they are logged in
+    * 
+    */
     useEffect(()=>{
         const userInfo=sessionStorage.getItem("userInfo");
         if(userInfo){

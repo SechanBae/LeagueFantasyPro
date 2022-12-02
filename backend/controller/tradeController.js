@@ -1,3 +1,6 @@
+/**
+ * Controller responsbile for making queries to trades stuff
+ */
 const db = require("../models");
 const Trade=db.trades;
 const League = db.leagues;
@@ -7,8 +10,12 @@ const Team=db.teams;
 const Op = db.Sequelize.Op;
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
-const e = require("cors");
 
+/**Get trades for a given user and its team
+ * separate the reponse to recieved trades and sent trades
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getTrades=async(req,res)=>{
     try {
         const team=await Team.findByPk(req.params.teamId);
@@ -57,6 +64,11 @@ exports.getTrades=async(req,res)=>{
         res.status(400).json({message:error.message})
     }
 }
+/**
+ * Get available players for trade
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getAvailablePlayers=async(req,res)=>{
     try {
         const team=await Team.findByPk(req.params.teamId);
@@ -108,6 +120,11 @@ exports.getAvailablePlayers=async(req,res)=>{
         res.status(400).json({message:error.message})
     }
 }
+/**
+ * Create trade for given players
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.createTrade=async(req,res)=>{
     try {
         const receiverTeam=await Team.findOne({
@@ -127,6 +144,15 @@ exports.createTrade=async(req,res)=>{
         res.status(400).json({message:error.message})
     }
 }
+/**
+ * Update trade status,
+ * if user cancels trade ->expired,
+ * denies the trade -> denied,
+ * accepts-> update players on the team to match trade and set trade to accepted,
+ * it also expires any trade involving the players within that trade
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.changeStatus=async(req,res)=>{
     try{
         const t=await Trade.findByPk(req.body.tradeId)

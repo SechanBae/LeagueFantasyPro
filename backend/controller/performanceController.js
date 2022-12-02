@@ -1,3 +1,6 @@
+/**
+ * Controller file responsbile for making queries to playerperformance/teamperformance
+ */
 const db=require("../models");
 const Player=db.players;
 const Team=db.teams;
@@ -7,9 +10,16 @@ const TeamPerformance=db.teamPerformances;
 const { sequelize } = require("../models");
 const Op = db.Sequelize.Op;
 const { QueryTypes } = require("sequelize");
+/** Check that it is admin from data from middleware.
+ * Create playerperformances based off csv file 
+ * Create teamperformaces for each team based on their lineup chosen
+ * Update the team's points
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.addPerformance=async(req,res)=>{
-    console.log(req.body);
-    try{
+    if(req.user.isAdmin){
+        try{
         const performances=req.body.performancesJSON;
         performances.forEach(async performance => {
             
@@ -97,8 +107,17 @@ exports.addPerformance=async(req,res)=>{
     }catch(error){
         res.status(400).json({message:error.message});
     }
+    }else{
+        res.status(400).json({message:"You do not have permission"});
+    }
+    
 }
 
+/**
+ * Get teamperformances for a given team
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getPerformances=async(req,res)=>{
     try {
         const teamPerformances=await TeamPerformance.findAll({
@@ -113,6 +132,11 @@ exports.getPerformances=async(req,res)=>{
         res.status(400).json({message:error.message});
     }
 }
+/**
+ * Get playerperformances for a member in a team
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getPlayerPerformances=async(req,res)=>{
     try {
         const player=await Player.findByPk(req.params.playerId);
@@ -130,6 +154,12 @@ exports.getPlayerPerformances=async(req,res)=>{
         res.status(400).json({message:error.message});
     }
 }
+
+/**
+ * Get all performances of players for a set of team
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getDetailedPerformances=async(req,res)=>{
     try{
         const detailedPerformances=await PlayerPerformance.findAll({
@@ -149,6 +179,13 @@ exports.getDetailedPerformances=async(req,res)=>{
         res.status(400).json({message:error.message});
     }
 }
+/**Check that user is admin through middleware data
+ * update all leagues that have finishhed drafing to isDone
+ * Delete any leagues/teams that have not finished drafting
+ * and set all players to pastPlayer true
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.finishSeason=async(req,res)=>{
     if(req.user.isAdmin){ 
         try {

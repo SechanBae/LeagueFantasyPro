@@ -1,3 +1,6 @@
+/**
+ * Renders component for register page
+ */
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Button, Col, Form, Row } from 'react-bootstrap'
@@ -14,12 +17,20 @@ const RegisterPage = () => {
     const [passwordConfirm,setPasswordConfirm]=useState("");
     const [loading,setLoading]=useState(false);
     const navigate=useNavigate();
+    /**
+    * When component is mounted, redirect user if they are logged in
+    * 
+    */
     useEffect(()=>{
         const userInfo=sessionStorage.getItem("userInfo");
         if(userInfo){
             navigate("/");
         }
-    })
+    },[])
+    /**
+     * make api call to register user based off user inputs
+     * @param {*} e 
+     */
     const submitHandler=async (e)=>{
         e.preventDefault();
         var passwordFormat=/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;

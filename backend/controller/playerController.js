@@ -1,6 +1,15 @@
+/**
+ * Controller that makes queries related to the Player model
+ */
 const db=require("../models");
 const Player=db.players;
 const League=db.leagues;
+/**
+ * Check that user is admin through data from middleware,
+ * Adds players that havent been added yet through an array of users
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.addPlayers=async(req,res)=>{
     try {
         if(req.user.isAdmin){
@@ -30,6 +39,11 @@ exports.addPlayers=async(req,res)=>{
     }
     
 }
+/** get players in same region as the league
+ * 
+ * @param {request data} req 
+ * @param {response data} res 
+ */
 exports.getPlayers=async(req,res)=>{
     try{
         const league=await League.findByPk(req.params.leagueId);

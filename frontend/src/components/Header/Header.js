@@ -1,3 +1,6 @@
+/**
+ * Header Component
+ */
 import React, { useEffect, useState } from 'react'
 import {Navbar,Container,Nav,NavDropdown,Button,Form,FormControl} from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
@@ -6,6 +9,9 @@ const Header = () => {
   const [username,setUsername]=useState("");
   const [isAdmin,setIsAdmin]=useState(false);
   const navigate=useNavigate(); 
+  /**
+   * When component is mounted, check if user has logged in which changes the header
+   */
   useEffect(()=>{
     const userInfo=sessionStorage.getItem("userInfo");
     if(userInfo){
