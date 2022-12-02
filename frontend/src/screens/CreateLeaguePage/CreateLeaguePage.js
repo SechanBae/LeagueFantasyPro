@@ -29,7 +29,6 @@ const CreateLeaguePage = () => {
   })
   const submitHandler=async (e)=>{
     e.preventDefault();
-    console.log({name,teamName,region})
     
     setLoading(true);
     try{
@@ -41,7 +40,6 @@ const CreateLeaguePage = () => {
           setError("Password must be at least 6 characters long");
         }
         else{
-          console.log("reach");
           const data=await axios.post("/api/leagues/create",{
             name:name,
             teamName:teamName,
@@ -52,7 +50,6 @@ const CreateLeaguePage = () => {
         }
       }
       else{
-        console.log("reach");
         const data=await axios.post("/api/leagues/create",{
           name:name,
           teamName:teamName,

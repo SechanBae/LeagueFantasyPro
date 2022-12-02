@@ -22,7 +22,6 @@ const AddPerformances = () => {
     if(week<10&&week>0){
         setPerformances(performances.pop());
         let performancesJSON=[];
-        console.log(performances);
         for(let i=1;i<performances.length;i++){
             performancesJSON.push({
                 [performances[0][0]]:performances[i][0],
@@ -56,7 +55,6 @@ const AddPerformances = () => {
   }
   const finishHandler=async()=>{
     try {
-        console.log("hello");
         const response=await axios.put("/api/performances/finishSeason",{},config);
         if(response){
             setConfirm("Season has completed");

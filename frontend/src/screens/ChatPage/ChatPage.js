@@ -42,7 +42,6 @@ const _setChosenChat=async(leagueId)=>{
   setChosenChat(leagueId);
   try{
     const response=await axios.get("/api/messages/"+leagueId,config);
-    console.log(response.data);
     setMessages(response.data.messages);
   }catch(error){
     setError(error.response.data.message);
@@ -52,7 +51,6 @@ const getLeagues=async()=>{
   try {
     const response=await axios.get('/api/leagues/',config);
     setLeagues(response.data.leagues);
-    console.log(response.data);
   } catch (error) {
     setError(error.response.data.message);
   }
@@ -96,7 +94,7 @@ const handleKeyUp=(e)=>{
           <div className='chatSelect'>
           {leagues?
             leagues.filter(league=>league.name.toLowerCase().includes(filter.toLocaleLowerCase())).map((league)=>(
-              <Card onClick={()=>_setChosenChat(league.leagueId)} key={league.leagueId} className='my-3 border border-white d-flex mx-auto' style={{width:"70vw"}}>
+              <Card role="button" onClick={()=>_setChosenChat(league.leagueId)} key={league.leagueId} className='my-3 border border-white d-flex mx-auto' style={{width:"50vw"}}>
                   <Card.Body>
                     {league.name}
                   </Card.Body>

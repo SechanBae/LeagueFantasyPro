@@ -39,7 +39,6 @@ const LeaguePage = () => {
             setDraftStatus(response.data.league.draftStatus);
             host=await response.data.league.host.toLowerCase();
           } catch (error) {
-            console.log(error);
             setError(error.response.data.message);
           }
       }
@@ -60,7 +59,6 @@ const LeaguePage = () => {
           top,jg,mid,adc,sup
         },config);
         setDetailedPerformances(response.data.detailedPerformances)
-        console.log(response.data.detailedPerformances);
       } catch (error) {
         setError(error.response.data.message);
       }

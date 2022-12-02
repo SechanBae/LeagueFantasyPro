@@ -31,7 +31,6 @@ const TeamPage = () => {
             const response=await axios.get("/api/performances/getPlayerPerformance/"+playerId+"/"+teamId,config);
             setPerformance(response.data.performance);
             setSelectedIndex(index)
-            console.log(response.data);
         }
         catch(error){
             setConfirm(false);
@@ -102,7 +101,7 @@ const TeamPage = () => {
             <tbody>
                 {players?
                 players.map((player,index)=>([
-                    <tr onClick={()=>getPerformance(player.playerId,index)} key={player.playerId}  className='my-5'>
+                    <tr role="button" onClick={()=>getPerformance(player.playerId,index)} key={player.playerId}  className='my-5'>
                         <td>{positions[index]}</td>
                         <td>{player.gameName}</td>
                         <td>{player.position}</td>

@@ -27,7 +27,7 @@ const JoinLeaguePage = () => {
             },
           }
             const response=await axios.get('/api/leagues/getAllLeagues',config);
-            console.log(response.data.leagues)
+            
             setLeagues(response.data.leagues);
           
         }
@@ -37,7 +37,6 @@ const JoinLeaguePage = () => {
       
     }
     getData();
-    console.log(leagues)
   },[])
   const sorting=(col)=>{
     if(orderDirection==="ASC"){

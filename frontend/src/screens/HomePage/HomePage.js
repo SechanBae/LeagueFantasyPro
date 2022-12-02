@@ -26,7 +26,6 @@ const HomePage = () => {
     const getLeagues=async()=>{
         try {
           const response=await axios.get('/api/leagues/',config);
-          console.log(response.data);
           setLeagues(response.data.leagues);
         } catch (error) {
           setError(error.response.data.message);

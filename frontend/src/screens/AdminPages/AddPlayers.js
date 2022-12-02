@@ -31,7 +31,6 @@ const AddPlayers = () => {
             [players[0][7]]:players[i][7],
             scoreRating:(players[i][4]*300)+(players[i][5]*(-100))+(players[i][6]*150)+(players[i][7]*1)});
     }
-    console.log(playersJSON);
     try{
         const {data}=await axios.post('/api/players/addPlayers',{
             playersJSON

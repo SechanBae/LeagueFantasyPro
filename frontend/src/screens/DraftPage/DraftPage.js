@@ -77,7 +77,6 @@ const DraftPage = () => {
 
       socket.on("draftPickBroadcast", (leagueIdBroadcast) => {
         if (leagueIdBroadcast == leagueId) {
-          console.log("Draft Pick");
           getPickOrder();
         }
       });
@@ -113,10 +112,8 @@ const DraftPage = () => {
           getPickOrder();
           setError(false);
           if (currentPick == null) {
-            console.log("FINISHED");
             finishDraft();
           } else if (currentPick == pickOrder[pickOrder.length - 1]) {
-            console.log("FINISHED");
             finishDraft();
           }
         }
