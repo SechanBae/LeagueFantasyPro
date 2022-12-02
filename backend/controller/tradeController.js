@@ -206,8 +206,8 @@ exports.changeStatus=async(req,res)=>{
             await sender.save();
             await receiver.save();
             
-            
         }
+        res.status(200).json({message:"Trade success"});
     }catch(error){
         console.log(error);
         res.status(400).json({message:error.message})

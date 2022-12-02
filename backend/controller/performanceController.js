@@ -40,7 +40,7 @@ exports.addPerformance=async(req,res)=>{
         });
         
         console.log(leagues);
-        leagues.forEach(async league => {
+        await leagues.forEach(async league => {
             console.log(league.leagueId);
             const teams=await Team.findAll({
                 where:{
@@ -90,21 +90,23 @@ exports.addPerformance=async(req,res)=>{
                     teamId:team.teamId,
                     score:score
                 })
+                team.points+=score;
                 await team.save();
             })
         });
-        const teams=await Team.findAll();
-        teams.forEach(async team=>{
-            sumScore=await sequelize.query(
-                "SELECT SUM(score) as sum FROM teamPerformances WHERE teamId=?",
-                {
-                  replacements: [team.teamId],
-                  type: QueryTypes.SELECT,
-                }
-              );
-            team.points=sumScore[0].sum;
-            await team.save();
-        })
+        // const teams=await Team.findAll();
+        // teams.forEach(async team=>{
+        //     sumScore=await sequelize.query(
+        //         "SELECT SUM(score) as sum FROM teamPerformances WHERE teamId=?",
+        //         {
+        //           replacements: [team.teamId],
+        //           type: QueryTypes.SELECT,
+        //         }
+        //       );
+        //     console.log(sumScore[0].sum);
+        //     team.points=sumScore[0].sum;
+        //     await team.save();
+        // })
         res.status(200).json({});
     }catch(error){
         res.status(400).json({message:error.message});
