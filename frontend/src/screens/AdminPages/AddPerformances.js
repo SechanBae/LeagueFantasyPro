@@ -14,7 +14,8 @@ const AddPerformances = () => {
   const [sure,setSure]=useState(false);
   const navigate=useNavigate();
   const addPerformances=async()=>{
-    if(performances[0][0]!=="gameName"&&performances[0][1]!=="totalKills"&&performances[0][2]!=="totalDeaths"&&performances[0][3]!=="totalAssists"&&performances[0][4]!=="totalCS"){
+    if(performances[0][1]!=="totalKills"&&performances[0][2]!=="totalDeaths"&&performances[0][3]!=="totalAssists"&&performances[0][4]!=="totalCS"){
+        console.log("HELLO");
         setError("File not in correct format");
         setConfirm(false);
         return;
