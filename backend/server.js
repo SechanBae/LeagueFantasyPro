@@ -26,39 +26,42 @@ if (process.env.NODE_ENV == "production") {
   app.use(express.static(path.join(__dirname1, "frontend/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+    db.sequelize
+    .sync({ alter:true})
+    .then(() => {
+      console.log("Synced db.");
+      /**
+       * Creates admin user if it doesn't exist
+       */
+      const adminData = {
+        username: "Admin",
+        password: "$2a$10$GcLCquYT3uW86bodXAH2euB2Ox.GmAIlbU/SWNfh94aNkQC2gYv4C",
+        isAdmin: true,
+      };
+      const admin = db.users
+        .findOne({
+          where: {
+            username: "Admin",
+            isAdmin: true,
+          },
+        })
+        .then((a) => {
+          if (!a) {
+            db.users.create(adminData);
+          }
+        });
+        
+      res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+    })
+    .catch((err) => {
+      res.send("Database is down, try again later");
+    });
   });
+  
+  
 } else {
 }
 
-db.sequelize
-  .sync({ alter:true})
-  .then(() => {
-    console.log("Synced db.");
-    /**
-     * Creates admin user if it doesn't exist
-     */
-    const adminData = {
-      username: "Admin",
-      password: "$2a$10$GcLCquYT3uW86bodXAH2euB2Ox.GmAIlbU/SWNfh94aNkQC2gYv4C",
-      isAdmin: true,
-    };
-    const admin = db.users
-      .findOne({
-        where: {
-          username: "Admin",
-          isAdmin: true,
-        },
-      })
-      .then((a) => {
-        if (!a) {
-          db.users.create(adminData);
-        }
-      });
-  })
-  .catch((err) => {
-    console.log("Failed to sync db: " + err.message);
-  });
 
 app.set("port", process.env.PORT || 5000);
 const PORT = process.env.PORT || 5000;
