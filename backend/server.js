@@ -22,14 +22,7 @@ require("./routes/tradeRoutes")(app);
 require("./routes/messageRoutes")(app);
 
 const __dirname1 = path.resolve();
-if (process.env.NODE_ENV == "production") {
-  app.use(express.static(path.join(__dirname1, "frontend/build")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
-  });
-} else {
-}
 
 db.sequelize
   .sync({ alter:true})
@@ -55,8 +48,19 @@ db.sequelize
           db.users.create(adminData);
         }
       });
+      if (process.env.NODE_ENV == "production") {
+        app.use(express.static(path.join(__dirname1, "frontend/build")));
+      
+        app.get("*", (req, res) => {
+          res.sendFile(path.resolve(__dirname1, "frontend", "build", "index.html"));
+        });
+      } else {
+      }
   })
   .catch((err) => {
+    app.get("*",(req,res)=>{
+      res.send("Database not working right now try again later");
+    })
     console.log("Failed to sync db: " + err.message);
   });
 
