@@ -93,7 +93,8 @@ exports.addPerformance=async(req,res)=>{
                 const score=topId.totalScore+jgId.totalScore+midId.totalScore+adcId.totalScore+supId.totalScore;
                 const alreadyPlayed=await TeamPerformance.count({
                     where:{
-                        week:req.body.week
+                        week:req.body.week,
+                        teamId:team.teamId
                     }
                 });
                 if(!alreadyPlayed){
