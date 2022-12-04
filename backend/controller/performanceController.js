@@ -30,7 +30,8 @@ exports.addPerformance=async(req,res)=>{
                 }
             });
             console.log(await p);
-            await PlayerPerformance.create({
+            if(p){
+                await PlayerPerformance.create({
                 playerId:p.playerId,
                 week:performance.week,
                 totalKills:performance.totalKills,
@@ -39,6 +40,8 @@ exports.addPerformance=async(req,res)=>{
                 totalCS:performance.totalCS,
                 totalScore:performance.totalScore,
             })
+            }
+            
         });
         const leagues=await League.findAll({
             attributes:["leagueId"],
@@ -57,7 +60,6 @@ exports.addPerformance=async(req,res)=>{
                 }
             })
             teams.forEach(async team=>{
-            
                 const topId=await PlayerPerformance.findOne({
                     where:{
                         week:req.body.week,
@@ -89,7 +91,13 @@ exports.addPerformance=async(req,res)=>{
                     }
                 })
                 const score=topId.totalScore+jgId.totalScore+midId.totalScore+adcId.totalScore+supId.totalScore;
-                await TeamPerformance.create({
+                const alreadyPlayed=await TeamPerformance.count({
+                    where:{
+                        week:req.body.week
+                    }
+                });
+                if(!alreadyPlayed){
+                    await TeamPerformance.create({
                     week:req.body.week,
                     top:topId.performanceId,
                     jungle:jgId.performanceId,
@@ -101,6 +109,9 @@ exports.addPerformance=async(req,res)=>{
                 })
                 team.points+=score;
                 await team.save();
+                }
+                
+                
             })
         });
         res.status(200).json({});
